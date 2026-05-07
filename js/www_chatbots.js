@@ -1,4 +1,5 @@
-if (typeof globalThis.Intl === "undefined") {
+if (typeof globalThis.www_chatbots === "undefined") {
+    console.log('www_chatbots loaded')
     Object.defineProperty(globalThis, 'www_chatbots', {
         value: [
             {
