@@ -20,7 +20,7 @@ var www_chatbots = [
         features: [],
     },
     {
-        name: "Mistral Le Chat",
+        name: "Le Chat",
         url: "https://chat.mistral.ai/chat",
         provider: "Mistral AI",
         features: [],
