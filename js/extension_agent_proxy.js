@@ -8,9 +8,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Stores active SSE clients
-let sseClients = [];
-
 // Define custom log format
 const myFormat = printf(({ level, message, timestamp }) => {
     return `${timestamp} [${level.toUpperCase()}]: ${message}`;
@@ -27,11 +24,9 @@ const logger = createLogger({
     ],
 });
 
-// Stores pending HTTP requests awaiting extension fulfillment
-// Key: requestId, Value: { resolve, reject, timeoutId }
-const pendingRequests = new Map();
+let SSEClient;
 
-// --- 1. SSE Stream Endpoint for the Extension ---
+// SSE
 app.get("/events", (req, res) => {
     res.writeHead(200, {
         "Content-Type": "text/event-stream",
@@ -43,11 +38,46 @@ app.get("/events", (req, res) => {
     // Keep connection alive
     res.write('data: {"status": "connected"}\n\n');
 
-    sseClients.push(res);
+    SSEClient = res;
 
     req.on("close", () => {
-        sseClients = sseClients.filter((client) => client !== res);
+        SSEClient.end();
     });
+});
+
+// Stores pending HTTP requests awaiting extension fulfillment
+const pendingRequests = new Map();
+
+app.post('/v1/response', async (req, res) => {
+    if (!SSEClient) return res.status(503).json({ error: 'No extension connected' });
+
+    const requestId = crypto.randomUUID();
+    
+    try {
+        const extensionResult = await new Promise((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
+                if (pendingRequests.has(requestId)) {
+                    pendingRequests.delete(requestId);
+                    reject(new Error('Timeout'));
+                }
+            }, 30000);
+
+            pendingRequests.set(requestId, { resolve, timeoutId });
+            sseClients.forEach(c => c.write(`data: ${JSON.stringify({ requestId, payload: req.body })}\n\n`));
+        });
+
+        res.status(200).json({ success: true, data: extensionResult });
+    } catch (err) {
+        res.status(504).json({ error: err.message }); 
+    }
+});
+
+process.on('SIGTERM', () => {
+    sseClients.forEach((clientRes) => {
+        clientRes.write('event: server-shutdown\ndata: {}\n\n');
+        clientRes.end();
+    });
+    sseClients = [];
 });
 
 app.listen(3000, () => console.log("Server running on port 3000"));
