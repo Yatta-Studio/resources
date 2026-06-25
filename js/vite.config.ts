@@ -1,44 +1,73 @@
-import { defineConfig } from 'vite';
-import { resolve, extname, relative } from 'path';
-import { fileURLToPath } from 'url';
-import { glob } from 'glob';
-import dts from 'vite-plugin-dts';
-
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+import { defineConfig } from "vite";
+import { resolve, extname, normalize, isAbsolute } from 'path';
+import { fileURLToPath } from "url";
+import { glob } from "glob";
+import dts from "vite-plugin-dts";
+// import commonjs from '@rollup/plugin-commonjs';
 
 export default defineConfig({
     plugins: [
-        // Automatically generates .d.ts files mirroring your module outputs
         dts({
-            include: ['js'],
-            outDir: 'dist'
-        })
+            // Tells the dts plugin to mirror your dynamic input configuration
+            entryRoot: ".",
+            outDir: "dist",
+        }),
     ],
     build: {
-        outDir: 'dist',
+        outDir: "dist",
         emptyOutDir: true,
         lib: {
-            // Required by Vite but overridden by rollupOptions.input
-            entry: resolve(__dirname, 'js/index.ts'),
-            formats: ['es', 'cjs']
+            // Fallback required by Vite
+            entry: resolve(__dirname, "js/index.ts"),
+            formats: ["es", "cjs"],
+            fileName: (format, entryName) => {
+                const ext = format === "cjs" ? "cjs" : "js";
+                return `${entryName}.${ext}`;
+            },
         },
         rollupOptions: {
-            // Dynamically maps "js/module-name/index.ts" to "module-name/index" output
+            external: (id) => {
+                const normalizedId = normalize(id);
+
+                // Inline all relative or local absolute paths
+                if (id.startsWith('.') || isAbsolute(normalizedId)) {
+                    if (normalizedId.includes('node_modules')) {
+                        return true;
+                    }
+                    return false; 
+                }
+                return true; 
+            },
             input: Object.fromEntries(
-                glob.sync('js/**/index.ts').map(file => [
-                    relative(
-                        'js',
-                        file.slice(0, file.length - extname(file).length)
-                    ),
-                    fileURLToPath(new URL(file, import.meta.url))
-                ])
+                glob
+                    .sync("**/index.ts", {
+                        ignore: [
+                            "node_modules/**",
+                            "dist/**",
+                            "artifacts/**", // Add any other build/cache dirs here
+                        ],
+                    })
+                    .map((file) => {
+                        // 1. Strip the extension (.ts)
+                        const noExt = file.slice(
+                            0,
+                            file.length - extname(file).length,
+                        );
+
+                        // 2. The key ('noExt') becomes the exact relative path inside the dist/ folder.
+                        // e.g., "src/agent_proxy/index" -> "dist/src/agent_proxy/index.esm.js"
+                        // e.g., "js/module-name/index"  -> "dist/js/module-name/index.esm.js"
+                        return [
+                            noExt,
+                            fileURLToPath(new URL(file, import.meta.url)),
+                        ];
+                    }),
             ),
             output: {
-                // Preserves module folders inside the dist directory
-                entryFileNames: '[name].[format].js',
-                chunkFileNames: 'chunks/[name]-[hash].js',
-                assetFileNames: 'assets/[name]-[hash].[ext]'
-            }
-        }
-    }
+                chunkFileNames: "chunks/[name]-[hash].js",
+                assetFileNames: "assets/[name]-[hash].[ext]",
+                exports: "named",
+            },
+        },
+    },
 });

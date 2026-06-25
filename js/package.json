@@ -7,9 +7,12 @@
         "build": "tsc && vite build"
     },
     "devDependencies": {
+        "@rollup/plugin-commonjs": "^29.0.3",
+        "@types/glob": "^8.1.0",
+        "@types/node": "^20.19.43",
+        "glob": "^13.0.6",
         "typescript": "^5.0.0",
-        "vite": "^5.0.0",
-        "vite-plugin-dts": "^4.0.0",
-        "@types/node": "^20.0.0"
+        "vite": "^8.1.0",
+        "vite-plugin-dts": "^4.0.0"
     }
 }
