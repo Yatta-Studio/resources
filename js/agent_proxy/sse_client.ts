@@ -8,6 +8,56 @@ interface BasePayLoad {
     model: string;
 }
 
+export interface OpenAIContext {
+  id: string;
+  object: 'chat.completion';
+  created: number; // Unix timestamp in seconds
+  model: string;
+  choices: ChatCompletionChoice[];
+  usage?: ChatCompletionUsage;
+  system_fingerprint?: string;
+}
+
+export interface ChatCompletionChoice {
+  index: number;
+  message: ChatCompletionMessage;
+  logprobs: ChatCompletionLogprobs | null;
+  finish_reason: 'stop' | 'length' | 'tool_calls' | 'content_filter' | 'function_call';
+}
+
+export interface ChatCompletionMessage {
+  role: 'system' | 'user' | 'assistant' | 'tool' | 'function';
+  content: string | null;
+  refusal?: string | null;
+  tool_calls?: ToolCall[];
+}
+
+export interface ToolCall {
+  id: string;
+  type: 'function';
+  function: {
+    name: string;
+    arguments: string; // JSON-formatted string
+  };
+}
+
+export interface ChatCompletionLogprobs {
+  content: ChatCompletionLogprobToken[] | null;
+}
+
+export interface ChatCompletionLogprobToken {
+  token: string;
+  logprob: number;
+  bytes: number[] | null;
+  top_logprobs: { token: string; logprob: number; bytes: number[] | null }[];
+}
+
+export interface ChatCompletionUsage {
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
+}
+
 export class SSEClient {
     private static instance: SSEClient | null = null;
     public static connection: typeof Response | null = null;
