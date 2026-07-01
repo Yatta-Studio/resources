@@ -49,8 +49,6 @@ export class SSEClient {
             model: 'kakudai',
         };
         SSEClient.sendChunk(res, basePayload, { role: "assistant", content: "" });
-        SSEClient.sendChunk(res, basePayload, {}, "stop");
-        SSEClient.sendChunk(res, basePayload, {}, "tool_calls");
         res.write("data: [DONE]\n\n");
         res.end();
     }
