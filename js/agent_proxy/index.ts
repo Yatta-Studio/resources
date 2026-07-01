@@ -59,7 +59,7 @@ app.post("/v1/chat/completions", async (req: Request, res: Response): Promise<vo
     }
 });
 
-app.post("/v1/chat_response", async (req, res): Promise<void> => {
+app.post("/v1/chat_response", async (req: Request, res: Response): Promise<void> => {
     const { request_id, result } = req.body;
 
     if (!request_id || !pending_requests.has(request_id)) {
@@ -82,4 +82,5 @@ process.on("SIGTERM", () => {
 
 app.listen(3000, () => console.log("Server running on port 3000"));
 
+export * from "./types";
 export {};

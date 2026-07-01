@@ -8,6 +8,7 @@
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^29.0.3",
+        "@types/express": "^5.0.6",
         "@types/glob": "^8.1.0",
         "@types/node": "^20.19.43",
         "glob": "^13.0.6",
