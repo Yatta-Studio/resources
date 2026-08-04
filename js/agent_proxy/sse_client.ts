@@ -1,6 +1,7 @@
 import type { OpenAIContext, ChatCompletionChunkDelta } from "./index";
 const { Express, Request, Response } = require("express");
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export class SSEClient {
     private static instance: SSEClient | null = null;

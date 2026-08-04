@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+    /* Register your theme tokens under the v4 @theme directive */
+    --color-surface: var(--color-surface);
+    --color-surface-card: var(--color-surface-card);
+    --color-surface-low: var(--color-surface-low);
+    --color-surface-container: var(--color-surface-container);
+    --color-surface-variant: var(--color-surface-variant);
+    --color-surface-container-lowest: var(--color-surface-container-lowest);
+    --color-surface-container-low: var(--color-surface-container-low);
+    --color-surface-container-high: var(--color-surface-container-high);
+    --color-surface-container-highest: var(--color-surface-container-highest);
+    --color-surface-bright: var(--color-surface-bright);
+    --color-on-surface: var(--color-on-surface);
+    --color-on-surface-variant: var(--color-on-surface-variant);
+    --color-outline: var(--color-outline);
+    --color-outline-variant: var(--color-outline-variant);
+}
+
+:root,
+.light {
+    --color-surface: #f8fafc;
+    --color-surface-card: #ffffff;
+    --color-surface-low: #f1f5f9;
+    --color-surface-container: #e2e8f0;
+    --color-surface-variant: #cbd5e1;
+    --color-surface-container-lowest: #f8fafc;
+    --color-surface-container-low: #f1f5f9;
+    --color-surface-container-high: #e2e8f0;
+    --color-surface-container-highest: #cbd5e1;
+    --color-surface-bright: #ffffff;
+    --color-on-surface: #1e293b;
+    --color-on-surface-variant: #475569;
+    --color-outline: rgba(30, 41, 59, 0.15);
+    --color-outline-variant: rgba(30, 41, 59, 0.08);
+}
+
+.dark {
+    --color-surface: #1e293b;
+    --color-surface-card: #293749;
+    --color-surface-low: #334155;
+    --color-surface-container: #0f172a;
+    --color-surface-variant: #475569;
+    --color-surface-container-lowest: #1e293b;
+    --color-surface-container-low: #1e293b;
+    --color-surface-container-high: #334155;
+    --color-surface-container-highest: #475569;
+    --color-surface-bright: #64748b;
+    --color-on-surface: #f8fafc;
+    --color-on-surface-variant: #cbd5e1;
+    --color-outline: rgba(248, 250, 252, 0.15);
+    --color-outline-variant: rgba(248, 250, 252, 0.08);
+}
+
+@layer base {
+    html,
+    body {
+        @apply flex w-full h-full text-sm font-sans;
+
+        #root {
+            @apply flex w-full h-full text-(--color-on-surface);
+        }
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        @apply text-(--color-on-surface);
+    }
+
+    h1 {
+        @apply text-4xl font-bold;
+    }
+    h2 {
+        @apply text-3xl font-semibold;
+    }
+    h3 {
+        @apply text-2xl font-semibold;
+    }
+    h4 {
+        @apply text-xl font-medium;
+    }
+    h5 {
+        @apply text-lg font-medium;
+    }
+
+    form {
+        @apply flex flex-col; /* Changed from 'col' to direct utilities */
+
+        h3,
+        h4,
+        h5 {
+            @apply mb-6;
+        }
+
+        fieldset {
+            @apply bg-(--color-surface) border border-(--color-outline) rounded-lg p-4; /* Inline implementation of surface-primary */
+
+            > * {
+                @apply mb-2;
+            }
+            > *:last-child {
+                @apply mb-0;
+            }
+        }
+
+        fieldset:last-child {
+            @apply mb-0;
+        }
+        label {
+            @apply block text-base text-(--color-on-surface-variant);
+        }
+        p {
+            @apply text-(--color-on-surface-variant);
+        }
+
+        input[type="text"],
+        textarea {
+            @apply w-full rounded-md border p-1.5 focus:outline-none focus:ring-1 focus:ring-(--color-primary) bg-(--color-surface-card) text-(--color-on-surface);
+        }
+    }
+}
+
+@layer utilities {
+    .col {
+        @apply flex flex-col;
+
+        &.ct-spring {
+            > :nth-child(2) {
+                @apply flex-1;
+            }
+        }
+    }
+
+    .row {
+        @apply flex items-center;
+
+        &.lt-spring {
+            @apply justify-between;
+            > :first-child {
+                @apply flex-1;
+            }
+            > :last-child {
+                @apply w-max;
+            }
+        }
+
+        &.tabs {
+            @apply relative gap-4;
+        }
+    }
+
+    .surface-main {
+        @apply flex flex-col w-full h-full overflow-hidden bg-(--color-surface-container);
+        > :last-child {
+            @apply flex flex-col flex-1 overflow-y-auto;
+        }
+    }
+
+    .surface-header {
+        @apply flex flex-col pb-0 shadow-md gap-y-4 bg-(--color-surface) p-2;
+    }
+
+    .surface-footer {
+        @apply flex shadow-md bg-(--color-surface) p-2;
+    }
+
+    .surface-primary {
+        @apply bg-(--color-surface) border border-(--color-outline) rounded-lg p-4;
+    }
+
+    .surface-card {
+        @apply flex flex-col p-3 bg-(--color-surface-card) border shadow-sm rounded-xl box-border;
+    }
+
+    .header-body-layout {
+        @apply flex flex-col w-full h-full overflow-hidden;
+        > :last-child {
+            @apply flex flex-col flex-1 overflow-y-auto;
+        }
+    }
+
+    .body-footer-layout {
+        @apply flex flex-col w-full h-full overflow-hidden;
+        > :first-child {
+            @apply flex flex-col flex-1 overflow-y-auto;
+        }
+    }
+
+    .action-card {
+        @apply cursor-pointer hover:bg-(--color-surface-bright);
+    }
+
+    .surface-dnd {
+        @apply flex flex-col items-center justify-center border-2 border-dashed border-(--color-outline) rounded-xl;
+    }
+
+    .flex-full {
+        @apply flex w-full h-full;
+    }
+}

@@ -1,12 +1,19 @@
 import { defineConfig } from "vite";
-import { resolve, extname, normalize, isAbsolute } from 'path';
+import { resolve, extname, normalize, isAbsolute } from "path";
 import { fileURLToPath } from "url";
 import { glob } from "glob";
 import dts from "vite-plugin-dts";
-// import commonjs from '@rollup/plugin-commonjs';
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 export default defineConfig({
     plugins: [
+        react(),
+        tailwindcss(),
+        cssInjectedByJsPlugin({
+            relativeCSSInjection: true, // Ensures only the module's own CSS is bundled into its script tag
+        }),
         dts({
             // Tells the dts plugin to mirror your dynamic input configuration
             entryRoot: ".",
@@ -16,6 +23,7 @@ export default defineConfig({
     build: {
         outDir: "dist",
         emptyOutDir: true,
+        cssCodeSplit: true,
         lib: {
             // Fallback required by Vite
             entry: resolve(__dirname, "js/index.ts"),
@@ -30,17 +38,17 @@ export default defineConfig({
                 const normalizedId = normalize(id);
 
                 // Inline all relative or local absolute paths
-                if (id.startsWith('.') || isAbsolute(normalizedId)) {
-                    if (normalizedId.includes('node_modules')) {
+                if (id.startsWith(".") || isAbsolute(normalizedId)) {
+                    if (normalizedId.includes("node_modules")) {
                         return true;
                     }
-                    return false; 
+                    return false;
                 }
-                return true; 
+                return true;
             },
             input: Object.fromEntries(
                 glob
-                    .sync("**/index.ts", {
+                    .sync("**/index.{ts,tsx}", {
                         ignore: [
                             "node_modules/**",
                             "dist/**",
