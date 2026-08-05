@@ -1,0 +1,417 @@
+{
+    "title": "Senior Software Engineer | AI-Enabled Applications | Full-Stack & Distributed Systems",
+    "summary": (
+        "Senior Software Engineer with 15+ years of experience designing and delivering "
+        "scalable enterprise software, APIs, data-intensive systems, and modern web "
+        "applications across healthcare, education technology, cybersecurity, and "
+        "business intelligence. Recently focused on building AI-enabled applications "
+        "that leverage agentic workflows and intelligent automation to solve complex "
+        "enterprise challenges, including AI-assisted data mapping and customer "
+        "integration solutions. Proven track record of leading technical initiatives, "
+        "architecting production-ready software, mentoring engineers, and delivering "
+        "customer-focused solutions. Backed by a Master's degree in Electrical "
+        "Engineering and a decade of experience in high-speed digital design and "
+        "circuit analysis, bringing a systems-thinking approach to designing reliable, "
+        "scalable software and AI solutions."
+    ),
+	"profile": {
+        "location": "Austin, TX",
+        "email": "g.qt.truong@gmail.com",
+        "phone": "512-844-0184",
+		"highlights": [
+            "master's degree in electrical engineering CSU Long Beach",
+            "10 years of experience in electrical engineering, circuit analysis",
+            "10+ years of experience in software engineering, web application development"
+        ],
+		"strengths": [
+            "outside of the box thinker",
+            "creative problem solver",
+            "patient communicator",
+            "technical writing",
+            "mentoring"
+        ],
+        "social_links": [
+            "https://www.linkedin.com/in/geraldtruong/"
+        ],
+        "spoken_languages": [
+            "fluent english",
+            "fluent french",
+            "basic spanish",
+            "basic vietnamese"
+        ]
+	},
+	"work_experiences": [
+		{
+			"company": {
+				"name": "Edlink",
+				"url": "https://ed.link",
+				"city": "Austin",
+				"state": "Texas",
+				"country": "United States",
+                "domains": ["Education Technology", "SIS Integration", "LMS Integration"]
+			},
+			"jobExperiences": [
+                {
+                    "title": "Software Engineer",
+                    "date": {
+                        "start": "06/2023",
+                        "end": "11/2025"
+                    },
+                    "achievements": [
+                        {
+                            "description": "Developed rostering and coursework API integration for Facts SIS.",
+                            "year": 2023,
+                            "skills": ["API Development", "Node.js", "TypeScript", "SIS", "Nest JS"]
+                        },
+                        {
+                            "description": "Developed rostering and coursework API integration for Blackbaud SIS.",
+                            "year": 2023,
+                            "skills": ["API Development", "Node.js", "TypeScript", "SIS", "Nest JS"]
+                        },
+                        {
+                            "description": "Developed rostering API and SSO integration for Toddle LMS.",
+                            "year": 2024,
+                            "skills": ["API Development", "Node.js", "TypeScript", "SSO", "LMS", "Nest JS"]
+                        },
+                        {
+                            "description": "Developed coursework API integration for Moodle LMS.",
+                            "year": 2024,
+                            "skills": ["API Development", "Node.js", "TypeScript", "PHP", "LMS", "Nest JS"]
+                        },
+                        {
+                            "description": "Developed coursework API integration for Moodle LMS.",
+                            "year": 2024,
+                            "skills": ["API Development", "Node.js", "TypeScript", "PHP", "LMS", "Nest JS"]
+                        },
+                        {
+                            "description": "Developed coursework API integration for Moodle LMS.",
+                            "year": 2024,
+                            "skills": ["API Development", "Node.js", "TypeScript", "PHP", "LMS", "Nest JS"]
+                        },
+                        {
+                            "description": "Developed LTI 1.1 and LTI 1.3 solutions for Canvas, Schoology, Brightspace and Blackboard.",
+                            "year": 2024,
+                            "skills": ["LTI", "Client Success"]
+                        },
+                        {
+                            "description": "Developed data pipeline monitoring UI.",
+                            "year": 2024,
+                            "skills": ["Vue JS", "Big Data", "Component Development"]
+                        },
+                        {
+                            "description": "Developed JSON editor for the management of custom properties on rostering records.",
+                            "year": 2024,
+                            "skills": ["Vue JS", "JSON", "Component Development"]
+                        },
+                        {
+                            "description": "Technical lead to client success team providing technical solutions to client integration issues.",
+                            "year": 2024,
+                            "skills": ["Client success", "Solution engineering"]
+                        },
+                        {
+                            "description": "Developed data audit functionality and notification feature",
+                            "year": 2024,
+                            "skills": ["SQL", "Node.js", "TypeScript", "Nest JS", "Email service"]
+                        },
+                        {
+                            "description": "Developed AI assisted data mapping agent to help clients map their SIS fields to Edlink fields.",
+                            "year": 2024,
+                            "skills": ["agentic AI", "TypeScript", "Data mapping", "Nest JS"]
+                        }
+                    ]
+                }
+			]
+		},
+		{
+			"company": {
+				"name": "Medidata",
+				"url": "https://www.medidata.com/en/",
+                "domains": ["Clinical Trials Management"]
+			},
+			"jobExperiences": [
+                {
+                    "title": "Senior Software Engineer",
+                    "date": {
+                        "start": "2017",
+                        "end": "03/2023"
+                    },
+                    "achievements": [
+                        {
+                            "description": "Lead a team of 2 data scientists to develop budget forecasting data pipeline.",
+                            "year": 2022,
+                            "skills": ["data science", "clinical trial budgeting", "OCR", "ETL"]
+                        },
+                        {
+                            "description": "Selected and participated in the architecture and design of Medidata's latest component library: 1XDS.",
+                            "year": 2022,
+                            "skills": ["Design system", "React", "Storybook", "Component library development"]
+                        },
+                        {
+                            "description": "Integrated Pendo Analytics live chat technology to address clients needs for better customer support.",
+                            "year": 2022,
+                            "skills": ["Tool integration", "Pendo", "Client Success"]
+                        },
+                        {
+                            "description": "Worked with budgeting experts to design and develop template based, quick-entry budgeting application.",
+                            "year": 2021,
+                            "skills": ["UX design", "Web Development", "Client Success", "clinical trial budgeting"]
+                        },
+                        {
+                            "description": "Led the research, prototyping, and implementation of end to end testing using puppeteer JS for multiple applications.",
+                            "year": 2019,
+                            "skills": ["Puppeteer JS", "End to End Testing"]
+                        },
+                        {
+                            "description": "Implemented critical and complex clinical trials user workflows using React and Redux.",
+                            "year": 2018,
+                            "skills": ["React", "Redux", "Internationalization"]
+                        },
+                        {
+                            "description": "Trained and mentored junior developers and engineers, teaching skills in React and Redux",
+                            "year": 2018,
+                            "skills": ["React", "Redux", "Mentoring"]
+                        },
+                        {
+                            "description": "Updated Angular code base to React for Medidata clinical trial management system",
+                            "year": 2017,
+                            "skills": ["Angular", "JavaScript", "React"]
+                        }
+                    ]
+                }
+			]
+		},
+		{
+			"company": {
+			"name": "Synack",
+			"url": "https://synack.com",
+			"country": "United States",
+            "domains": ["Cybersecurity", "Crowdsourced Security Testing"]
+			},
+			"jobExperiences": [
+                {
+                    "title": "Senior Software Engineer",
+                    "date": {
+                        "start": "2015",
+                        "end": "2017"
+                    },
+                    "achievements": [
+                        {
+                            "description": "Developed data visualization components for Synack's dashboard product using React and D3.js",
+                            "year": 2017,
+                            "skills": ["React", "D3.js", "CSS", "JavaScript", "HTML", "SVG", "REST API", "Big Data", "Data Visualization"]
+                        },
+                        {
+                            "description": "Developed Synack platform messaging application",
+                            "year": 2017,
+                            "skills": ["Javascript", "React", "Redux", "Ruby on Rails"]
+                        },
+                        {
+                            "description": "Converted dashboard design mockups into responsive web applications",
+                            "year": 2016,
+                            "skills": ["React", "Redux", "CSS", "JavaScript", "HTML"]
+                        }
+                    ]
+                }
+			]
+		},
+		{
+			"company": {
+				"name": "Jobscience",
+				"url": "https://www.linkedin.com/company/jobscience",
+				"country": "United States",
+                "domains": ["Recruitment Software", "Salesforce Platform"]
+			},
+			"jobExperiences": [
+                {
+                    "title": "Technical Lead",
+                    "date": {
+                        "start": "2013",
+                        "end": "2015"
+                    },
+                    "achievements": [
+                        {
+                            "description": "Developed mobile job board application on top of Salesforce platform",
+                            "year": 2015,
+                            "skills": ["Salesforce", "Apex", "JavaScript", "HTML", "CSS", "Mobile web"]
+                        },
+                        {
+                            "description": "Developed resume evaluator application on Salesforce platform.",
+                            "year": 2014,
+                            "skills": ["Salesforce", "Apex", "JavaScript", "HTML", "CSS"]
+                        },
+                        {
+                            "description": "Developed PDF renderer component for resume viewing.",
+                            "year": 2014,
+                            "skills": ["JavaScript", "HTML", "CSS"]
+                        },
+                        {
+                            "description": "Provided technical guidance to a team of developers in Belarus.",
+                            "year": 2014,
+                            "skills": ["JavaScript", "HTML", "CSS", "team player", "Good communicator", "Mentor"]
+                        }
+                    ]
+                }
+			]
+		},
+		{
+			"company": {
+			"name": "Jaspersoft",
+			"url": "https://www.jaspersoft.com",
+				"country": "United States",
+                "domains": ["Business Intelligence", "Data Visualization", "Reporting Software"]
+			},
+			"jobExperiences": [
+                {
+                    "title": "Senior Software Engineer",
+                    "date": {
+                        "start": "2011",
+                        "end": "2013"
+                    },
+                    "achievements": [
+                        {
+                            "description": "Created and developed Visualize.js, an award winning javascript library to create and embed dashboards from existing reports on any website. [Link to product page](https://www.jaspersoft.com/solutions/embedded-analytics)",
+                            "year": 2013,
+                            "skills": ["JavaScript", "Framework development"]
+                        },
+                        {
+                            "description": "Re-designed and optimized Jasperserver application UI for the Ipad",
+                            "year": 2012,
+                            "skills": ["JavaScript", "HTML", "CSS", "Responsive Design", "Mobile web"]
+                        },
+                        {
+                            "description": "Developed big data datatable component to view tabular data with > 100,000 rows.",
+                            "year": 2012,
+                            "skills": ["JavaScript", "HTML", "CSS", "Data Visualization"]
+                        },
+                        {
+                            "description": "Developed cross browsers charting components for web based reports",
+                            "year": 2011,
+                            "skills": ["JavaScript", "HTML", "CSS", "Data Visualization"]
+                        },
+                        {
+                            "description": "Reduced total CSS payload by 25% for Jaspersoft Server web applications",
+                            "year": 2011,
+                            "skills": ["CSS Optimization", "Performance Tuning", "Web Development"]
+                        }
+                    ]
+                }
+			]
+		},
+		{
+			"company": {
+                "name": "Isola",
+                "url": "https://www.isola-group.com/",
+                "country": "United States",
+                "domains": ["PCB Materials", "High-Speed PCB Design Tools"]
+			},
+			"jobExperiences": [
+                {
+                    "title": "Software Contractor",
+                    "date": {
+                        "start": "2010",
+                        "end": "2011"
+                    },
+                    "achievements": [
+                        {
+                            "description": "Designed and developed 1st ever PCB stackup CAD web application: IsoDesign. [Link to publication.](https://www.fed.de/themen/leitfaden-high-speed-leiterplattendesign/high-speed-tools/)",
+                            "year": 2010,
+                            "skills": ["UX design", "Web Development", "JavaScript", "HTML", "CSS", "SVG", "JQuery", "Raphael JS", "MVC design", "Data Visualization", "Circuit Analysis"]
+                        }
+                    ]
+                }
+			]
+		},
+		{
+			"company": {
+                "name": "Force 10 Networks",
+                "url": "https://en.wikipedia.org/wiki/Force10",
+                "country": "United States",
+                "domains": ["Networking Hardware", "High-Speed Digital Design"]
+			},
+			"jobExperiences": [
+                {
+                    "title": "Signal Integrity Engineer",
+                    "achievements": [
+                        {
+                            "description": "Performed circuit analysis and signal integrity simulations on next generation 24 layers linecard containing 4 ASICS each with DDR2+ @ 400MHz, QDR2+ @ 400MHz, GDDR3 @ 500MHz, CAM @ 300 MHz, PCI, XAUI and RGMII interfaces, plus 2 ASICS with 20 channels at 6.250GHz and 40 channels at 3.125GHz",
+                            "year": 2007,
+                            "skills": ["Signal Integrity", "Circuit Analysis", "High-Speed Digital Design"]
+                        },
+                        {
+                            "description": "Procured, reviewed and maintained IBIS models for signal integrity analysis of high-speed digital designs.",
+                            "year": 2006,
+                            "skills": ["Signal Integrity", "IBIS Modeling"]
+                        }
+                    ]
+                }
+			]
+		},
+		{
+			"company": {
+                "name": "Northrop Grumman",
+                "url": "https://www.northropgrumman.com/",
+                "country": "United States",
+                "domains": ["Aerospace", "Defense", "Satellite Systems"]
+			},
+			"jobExperiences": [
+                {
+                    "title": "Electrical Engineer",
+                    "achievements": [
+                        {
+                            "description": "Performed circuit analysis and signal integrity simulations on 3 digital modules in the FA22 software radio system.",
+                            "year": 2005,
+                            "skills": ["Signal Integrity", "Circuit Analysis", "High-Speed Digital Design"]
+                        },
+                        {
+                            "description": "Performed circuit analysis and signal integrity simulations on 2 digital modules for the NPOESS C&DH subsystem.",
+                            "year": 2004,
+                            "skills": ["Signal Integrity", "Circuit Analysis", "High-Speed Digital Design"]
+                        }
+                    ]
+                },
+                {
+                    "title": "Application Support Engineer",
+                    "achievements": [
+                        {
+                            "description": "Developed and provided training for Mentor Graphics signal integrity analysis application used by 40+ engineers",
+                            "year": 2003,
+                            "skills": ["Signal Integrity", "Application Support", "Mentoring", "Techinical Writing"]
+                        }
+                    ]
+                }
+			]
+		},
+		{
+			"company": {
+                "name": "Motorola Computer Group",
+                "url": "https://emuseum.tempe.gov/objects/2767/motorola--2900-s-diablo-way--tempe-arizona",
+                "city": "Tempe",
+                "state": "Arizona",
+                "country": "United States",
+                "domains": ["Computer Hardware", "High-Speed Digital Design"]
+			},
+			"jobExperiences": [
+                {
+                    "title": "Signal Integrity Engineer",
+                    "achievements": [
+                        {
+                            "description": "Planned and performed signal integrity simulations for high-speed digital designs using IBIS models to ensure signal quality and integrity on PCB designs",
+                            "year": 2002,
+                            "skills": ["Signal Integrity", "IBIS Modeling", "High-Speed Digital Design", "Mentor Graphics SI Tools", "Cadence SI Tools"]
+                        },
+                        {
+                            "description": "Worked with IC vendors to obtain accurate IBIS models for high-speed components used in digital designs",
+                            "year": 2001,
+                            "skills": ["IBIS Modeling", "High-Speed Digital Design"]
+                        },
+                        {
+                            "description": "Procured, reviewed and maintained IBIS models for signal integrity analysis of high-speed digital designs.",
+                            "year": 2000,
+                            "skills": ["Signal Integrity", "IBIS Modeling"]
+                        }
+                    ]
+                }
+			]
+		}
+	]
+}
