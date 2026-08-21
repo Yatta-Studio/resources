@@ -79,5 +79,9 @@ export default defineConfig({
                 exports: "named",
             },
         },
+        watch: {
+            exclude: ['dist/**', 'node_modules/**'],
+            include: ['noto/**'],
+        },
     },
 });

@@ -4,7 +4,9 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "build": "tsc && vite build"
+        "build": "tsc && vite build",
+        "watch": "vite build --watch --emptyOutDir false",
+        "preview": "vite preview"
     },
     "devDependencies": {
         "@rollup/plugin-commonjs": "^29.0.3",
