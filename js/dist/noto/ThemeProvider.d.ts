@@ -7,6 +7,6 @@ interface ThemeContextType {
 }
 export declare function ThemeProvider({ children }: {
     children: ReactNode;
-}): import("react/jsx-runtime").JSX.Element;
+}): import("react").JSX.Element;
 export declare function useTheme(): ThemeContextType;
 export {};
