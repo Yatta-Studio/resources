@@ -1,8 +1,10 @@
 (function () {
     // Function to extract span elements that precede the aria-label target
     function getQuestionElements() {
+        // const selectorAttribute = '="Expand query preview"';
+        const selectorAttribute = '*="Query Preview for" i';
         const targetElements = document.querySelectorAll(
-            'div[aria-label="Expand query preview"]',
+            `div[aria-label${selectorAttribute}]`
         );
         const elements = [];
 
