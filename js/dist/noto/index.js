@@ -101,13 +101,7 @@ function O(e) {
 	function t(t) {
 		if (t.source !== window || t.data?.type !== "DISPLAY_MARKDOWN") return;
 		let n = t.data.data;
-		if (n) {
-			let t = Object.keys(n);
-			if (t.length > 0) {
-				let r = t[0], i = n[r];
-				e(r, typeof i == "object" && i ? i.markdown || "" : i || "");
-			}
-		}
+		console.log("show markdown", n), e("New Document", n);
 	}
 	return window.addEventListener("message", t), () => {
 		window.removeEventListener("message", t);
