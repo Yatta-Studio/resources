@@ -1,6 +1,6 @@
 import { useId } from "react";
 import { FileIcon, FolderIcon, FolderOpenIcon } from "lucide-react";
-import { Directory } from "./directory";
+import { Directory } from "./types";
 import { FileList } from "./file-list";
 
 interface FileNodeProps {
@@ -22,7 +22,7 @@ export function FileNode({ directory, onSelectFile }: FileNodeProps) {
                     onClick={() => onSelectFile?.(directory)}
                     className="flex items-center gap-2 w-full text-left bg-transparent border-none p-0 cursor-pointer text-inherit font-inherit"
                 >
-                    <FileIcon className="h-4 w-4 text-on-surface-variant shrink-0" />
+                    <FileIcon className="h-4 w-4 shrink-0 text-sky-300" />
                     <span className="truncate">{directory.name}</span>
                 </button>
             </li>
@@ -37,8 +37,8 @@ export function FileNode({ directory, onSelectFile }: FileNodeProps) {
             >
                 <input id={nodeId} type="checkbox" className="hidden" />
 
-                <FolderIcon className="h-4 w-4 text-on-surface-variant shrink-0 group-has-checked:hidden" />
-                <FolderOpenIcon className="hidden h-4 w-4 text-on-surface-variant shrink-0 group-has-checked:block" />
+                <FolderIcon className="h-4 w-4 shrink-0 group-has-checked:hidden text-amber-500" />
+                <FolderOpenIcon className="hidden h-4 w-4 shrink-0 group-has-checked:block text-amber-500" />
 
                 <span className="truncate font-medium">{directory.name}</span>
             </label>

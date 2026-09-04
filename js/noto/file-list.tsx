@@ -1,4 +1,4 @@
-import { Directory } from "./directory";
+import { Directory } from "./types";
 import { FileNode } from "./file-node";
 
 interface FileListProps {

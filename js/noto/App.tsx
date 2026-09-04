@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Sun,
     Moon,
@@ -8,53 +8,48 @@ import {
     Edit3,
     Eye,
     Columns,
+    FileCode,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { useTheme } from "./ThemeProvider";
-import { Directory } from "./directory";
 import { FileList } from "./file-list";
-
-const INITIAL_FILES: Directory[] = [
-    {
-        name: "docs",
-        files: [
-            {
-                name: "getting-started.md",
-                content:
-                    "# Getting Started\n\nWelcome to **Noto**! Select files from the sidebar to view or edit them.",
-            },
-            {
-                name: "features.md",
-                content:
-                    "# Features\n\n- **File Tree Navigation**: Browse markdown files in a clean tree structure.\n- **View Modes**: Switch between Editor, Preview, or Split view.\n- **Dark/Light Mode**: Full theme customization.",
-            },
-        ],
-    },
-    {
-        name: "notes",
-        files: [
-            {
-                name: "todo.md",
-                content:
-                    "# Todo List\n\n- [x] Integrate file tree\n- [x] Add view modes\n- [ ] Add auto-save support",
-            },
-        ],
-    },
-    {
-        name: "README.md",
-        content:
-            "# Welcome to Noto\n\nStart typing **markdown** in the editor panel to see the live preview.\n\n### Quick Start\n- Use the sidebar on the left to navigate files.\n- Use the view tabs in the header to switch between Editor, Preview, or Split mode.",
-    },
-];
-
-type ViewMode = "editor" | "preview" | "split";
+import { Directory, ViewMode } from "./types";
+import { listFolders } from "./api";
 
 const App = () => {
     const { theme, toggleTheme } = useTheme();
-    const [markdown, setMarkdown] = useState<string>(INITIAL_FILES[2].content!);
-    const [activeFileName, setActiveFileName] = useState<string>("README.md");
+    const [markdown, setMarkdown] = useState<string>("");
+    const [activeFileName, setActiveFileName] = useState<string | null>(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
     const [viewMode, setViewMode] = useState<ViewMode>("split");
+
+    // File tree state initialized with static defaults
+    const [files, setFiles] = useState<Directory[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    // Fetch dynamic folder structure on mount via Messaging API
+    useEffect(() => {
+        async function fetchFolders() {
+            try {
+                const folderData = await listFolders();
+                // Map FolderInfo[] into Directory format expected by FileList
+                const remoteDirectories: Directory[] = folderData.map((f) => ({
+                    name: f.folderPath,
+                    files: [],
+                }));
+                setFiles(remoteDirectories);
+            } catch (err) {
+                console.error(
+                    "Failed to load folders from extension API:",
+                    err,
+                );
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchFolders();
+    }, []);
 
     const handleSelectFile = (file: Directory) => {
         if (file.content !== undefined) {
@@ -65,7 +60,6 @@ const App = () => {
 
     return (
         <div className="flex flex-col w-full h-full bg-surface-container overflow-hidden">
-            {/* Top Header Bar */}
             <header className="flex items-center justify-between h-14 px-4 bg-surface border-b border-outline shrink-0">
                 <div className="flex items-center gap-3">
                     <button
@@ -92,11 +86,10 @@ const App = () => {
                     </div>
 
                     <span className="text-xs text-on-surface-variant bg-surface-low px-2 py-1 rounded border border-outline hidden sm:inline-block">
-                        {activeFileName}
+                        {activeFileName ?? "No active document"}
                     </span>
                 </div>
 
-                {/* View Mode Controls */}
                 <div className="flex items-center gap-1 bg-surface-low p-1 rounded-lg border border-outline">
                     <button
                         type="button"
@@ -136,7 +129,6 @@ const App = () => {
                     </button>
                 </div>
 
-                {/* Theme Toggle */}
                 <button
                     type="button"
                     onClick={toggleTheme}
@@ -160,55 +152,79 @@ const App = () => {
                 </button>
             </header>
 
-            {/* Main Content Workspace */}
             <div className="flex-1 flex w-full min-h-0 overflow-hidden">
-                {/* File Tree Sidebar */}
                 {isSidebarOpen && (
                     <aside className="w-64 border-r border-outline bg-surface-card flex flex-col shrink-0 p-3 overflow-y-auto">
                         <span className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-2 px-2">
                             Explorer
                         </span>
-                        <FileList
-                            fileList={INITIAL_FILES}
-                            onSelectFile={handleSelectFile}
-                        />
+                        {isLoading ? (
+                            <span className="text-xs text-on-surface-variant px-2">
+                                Loading folders...
+                            </span>
+                        ) : (
+                            <FileList
+                                fileList={files}
+                                onSelectFile={handleSelectFile}
+                            />
+                        )}
                     </aside>
                 )}
 
-                {/* Editor / Preview Main Area */}
                 <main className="flex-1 flex w-full min-h-0 p-4 gap-4 overflow-hidden">
-                    {/* Editor Pane */}
-                    {(viewMode === "editor" || viewMode === "split") && (
-                        <div className="flex-1 flex flex-col h-full bg-surface-card border border-outline rounded-xl p-4 shadow-sm min-w-0">
-                            <div className="flex items-center justify-between pb-2 mb-2 border-b border-outline shrink-0">
-                                <span className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
-                                    Markdown Source
-                                </span>
-                            </div>
-                            <textarea
-                                id="markdown-input"
-                                value={markdown}
-                                onChange={(e) => setMarkdown(e.target.value)}
-                                placeholder="Write your markdown here..."
-                                className="flex-1 w-full h-full resize-none border-none outline-none bg-transparent text-on-surface font-mono text-sm leading-relaxed overflow-y-auto focus:ring-0"
-                            />
+                    {!activeFileName ? (
+                        /* Fallback view when no file is active */
+                        <div className="flex-1 flex flex-col items-center justify-center h-full bg-surface-card border border-outline rounded-xl p-8 text-center shadow-sm">
+                            <FileCode className="size-12 text-on-surface-variant/40 mb-3" />
+                            <h4 className="text-base font-medium text-on-surface mb-1">
+                                No Document Selected
+                            </h4>
+                            <p className="text-xs text-on-surface-variant max-w-xs">
+                                Choose a document from the explorer on the left
+                                to start editing or reading.
+                            </p>
                         </div>
-                    )}
-
-                    {/* Preview Pane */}
-                    {(viewMode === "preview" || viewMode === "split") && (
-                        <div className="flex-1 flex flex-col h-full bg-surface-card border border-outline rounded-xl p-4 shadow-sm min-w-0">
-                            <div className="flex items-center justify-between pb-2 mb-2 border-b border-outline shrink-0">
-                                <span className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
-                                    Live Preview
-                                </span>
-                            </div>
-                            <div className="flex-1 overflow-y-auto text-on-surface pr-1">
-                                <div className="prose max-w-none text-on-surface">
-                                    <ReactMarkdown>{markdown}</ReactMarkdown>
+                    ) : (
+                        /* Active document views */
+                        <>
+                            {(viewMode === "editor" ||
+                                viewMode === "split") && (
+                                <div className="flex-1 flex flex-col h-full bg-surface-card border border-outline rounded-xl p-4 shadow-sm min-w-0">
+                                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-outline shrink-0">
+                                        <span className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
+                                            Markdown Source
+                                        </span>
+                                    </div>
+                                    <textarea
+                                        id="markdown-input"
+                                        value={markdown}
+                                        onChange={(e) =>
+                                            setMarkdown(e.target.value)
+                                        }
+                                        placeholder="Write your markdown here..."
+                                        className="flex-1 w-full h-full resize-none border-none outline-none bg-transparent text-on-surface font-mono text-sm leading-relaxed overflow-y-auto focus:ring-0"
+                                    />
                                 </div>
-                            </div>
-                        </div>
+                            )}
+
+                            {(viewMode === "preview" ||
+                                viewMode === "split") && (
+                                <div className="flex-1 flex flex-col h-full bg-surface-card border border-outline rounded-xl p-4 shadow-sm min-w-0">
+                                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-outline shrink-0">
+                                        <span className="text-xs font-semibold uppercase tracking-wider text-on-surface-variant">
+                                            Live Preview
+                                        </span>
+                                    </div>
+                                    <div className="flex-1 overflow-y-auto text-on-surface pr-1">
+                                        <div className="prose max-w-none text-on-surface">
+                                            <ReactMarkdown>
+                                                {markdown}
+                                            </ReactMarkdown>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </>
                     )}
                 </main>
             </div>

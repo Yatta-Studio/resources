@@ -1,4 +1,4 @@
-import { Directory } from './directory';
+import { Directory } from './types';
 interface FileNodeProps {
     directory: Directory;
     onSelectFile?: (file: Directory) => void;

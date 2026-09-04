@@ -3,3 +3,5 @@ export interface Directory {
     content?: string;
     files?: Directory[];
 }
+
+export type ViewMode = "editor" | "preview" | "split";
