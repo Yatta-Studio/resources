@@ -97,11 +97,27 @@ function D({ fileList: e, onSelectFile: t }) {
 }
 //#endregion
 //#region noto/api.ts
-function O(e = "") {
+function O(e) {
+	function t(t) {
+		if (t.source !== window || t.data?.type !== "DISPLAY_MARKDOWN") return;
+		let n = t.data.data;
+		if (n) {
+			let t = Object.keys(n);
+			if (t.length > 0) {
+				let r = t[0], i = n[r];
+				e(r, typeof i == "object" && i ? i.markdown || "" : i || "");
+			}
+		}
+	}
+	return window.addEventListener("message", t), () => {
+		window.removeEventListener("message", t);
+	};
+}
+function k(e = "") {
 	return new Promise((t, n) => {
 		let r = `req_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 		function i(e) {
-			e.source === window && e.data?.type === "WEB_RAG_LIST_FOLDERS_RESPONSE" && e.data?.requestId === r && (window.removeEventListener("message", i), e.data.success && e.data.data ? t(e.data.data) : n(Error(e.data.error ?? "Failed to retrieve folders from extension.")));
+			e.source === window && e.data?.type === "WEB_RAG_LIST_FOLDERS_RESPONSE" && e.data?.requestId === r && (window.removeEventListener("message", i), e.data.success && e.data.data ? (console.log("WEB_RAG_LIST_FOLDERS_RESPONSE", e.data), t(e.data.data)) : n(Error(e.data.error ?? "Failed to retrieve folders from extension.")));
 		}
 		window.addEventListener("message", i), window.postMessage({
 			type: "WEB_RAG_LIST_FOLDERS",
@@ -112,23 +128,29 @@ function O(e = "") {
 }
 //#endregion
 //#region noto/App.tsx
-var k = () => {
-	let { theme: e, toggleTheme: t } = T(), [n, i] = a(""), [o, d] = a(null), [p, m] = a(!0), [C, w] = a("split"), [E, k] = a([]), [A, j] = a(!0);
+var A = () => {
+	let { theme: e, toggleTheme: t } = T(), [n, i] = a(""), [o, d] = a(null), [p, m] = a(!0), [C, w] = a("split"), [E, A] = a([]), [j, M] = a(!0);
 	return r(() => {
 		async function e() {
 			try {
-				let e = (await O()).map((e) => ({
+				let e = (await k()).map((e) => ({
 					name: e.folderPath,
 					files: []
 				}));
-				k(e);
+				A(e);
 			} catch (e) {
 				console.error("Failed to load folders from extension API:", e);
 			} finally {
-				j(!1);
+				M(!1);
 			}
 		}
 		e();
+		let t = O((e, t) => {
+			i(t), d(e);
+		});
+		return () => {
+			t();
+		};
 	}, []), /* @__PURE__ */ S("div", {
 		className: "flex flex-col w-full h-full bg-surface-container overflow-hidden",
 		children: [/* @__PURE__ */ S("header", {
@@ -206,7 +228,7 @@ var k = () => {
 				children: [/* @__PURE__ */ x("span", {
 					className: "text-xs font-semibold uppercase tracking-wider text-on-surface-variant mb-2 px-2",
 					children: "Explorer"
-				}), A ? /* @__PURE__ */ x("span", {
+				}), j ? /* @__PURE__ */ x("span", {
 					className: "text-xs text-on-surface-variant px-2",
 					children: "Loading folders..."
 				}) : /* @__PURE__ */ x(D, {
@@ -264,7 +286,7 @@ var k = () => {
 			})]
 		})]
 	});
-}, A = document.getElementById("root");
-if (!A) throw Error("#root element not found");
-o(A).render(/* @__PURE__ */ x(e, { children: /* @__PURE__ */ x(w, { children: /* @__PURE__ */ x(k, {}) }) }));
+}, j = document.getElementById("root");
+if (!j) throw Error("#root element not found");
+o(j).render(/* @__PURE__ */ x(e, { children: /* @__PURE__ */ x(w, { children: /* @__PURE__ */ x(A, {}) }) }));
 //#endregion

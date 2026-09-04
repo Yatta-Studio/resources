@@ -15,6 +15,7 @@ import { useTheme } from "./ThemeProvider";
 import { FileList } from "./file-list";
 import { Directory, ViewMode } from "./types";
 import { listFolders } from "./api";
+import { onDisplayMarkdown } from "./api";
 
 const App = () => {
     const { theme, toggleTheme } = useTheme();
@@ -27,12 +28,10 @@ const App = () => {
     const [files, setFiles] = useState<Directory[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    // Fetch dynamic folder structure on mount via Messaging API
     useEffect(() => {
         async function fetchFolders() {
             try {
                 const folderData = await listFolders();
-                // Map FolderInfo[] into Directory format expected by FileList
                 const remoteDirectories: Directory[] = folderData.map((f) => ({
                     name: f.folderPath,
                     files: [],
@@ -48,7 +47,18 @@ const App = () => {
             }
         }
 
+        // Fetch dynamic folder structure on mount via Messaging API
         fetchFolders();
+
+        // Listen for markdown pushed from noto_content script
+        const unsubscribe = onDisplayMarkdown((path, markdownContent) => {
+            setMarkdown(markdownContent);
+            setActiveFileName(path);
+        });
+
+        return () => {
+            unsubscribe();
+        };
     }, []);
 
     const handleSelectFile = (file: Directory) => {
