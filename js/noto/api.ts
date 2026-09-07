@@ -5,7 +5,7 @@ export interface FolderInfo {
 }
 
 interface WebListFoldersResponseEventData {
-    type: "WEB_RAG_LIST_FOLDERS_RESPONSE";
+    type: "LIST_FOLDERS_RESPONSE";
     requestId: string;
     success: boolean;
     data?: FolderInfo[];
@@ -18,9 +18,6 @@ interface DisplayMarkdownEventData {
     data: string;
 }
 
-/**
- * Listens for incoming DISPLAY_MARKDOWN pushes originating from the noto_content script.
- */
 export function onDisplayMarkdown(
     callback: (path: string, markdown: string) => void,
 ): () => void {
@@ -34,7 +31,6 @@ export function onDisplayMarkdown(
         }
 
         const markdown = event.data.data;
-        console.log('show markdown', markdown);
         callback('New Document', markdown);
     }
 
@@ -58,17 +54,18 @@ export function listFolders(parentPath: string = ""): Promise<FolderInfo[]> {
         ): void {
             if (
                 event.source !== window ||
-                event.data?.type !== "WEB_RAG_LIST_FOLDERS_RESPONSE" ||
+                event.data?.type !== "LIST_FOLDERS_RESPONSE" ||
                 event.data?.requestId !== requestId
             ) {
                 return;
             }
 
-            // Clean up listener to prevent leaks
             window.removeEventListener("message", handleResponse);
 
+            console.log(event.data);
+            
             if (event.data.success && event.data.data) {
-                console.log("WEB_RAG_LIST_FOLDERS_RESPONSE", event.data);
+                console.log("LIST_FOLDERS_RESPONSE", event.data);
                 resolve(event.data.data);
             } else {
                 reject(

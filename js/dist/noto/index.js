@@ -101,7 +101,7 @@ function O(e) {
 	function t(t) {
 		if (t.source !== window || t.data?.type !== "DISPLAY_MARKDOWN") return;
 		let n = t.data.data;
-		console.log("show markdown", n), e("New Document", n);
+		e("New Document", n);
 	}
 	return window.addEventListener("message", t), () => {
 		window.removeEventListener("message", t);
@@ -111,7 +111,7 @@ function k(e = "") {
 	return new Promise((t, n) => {
 		let r = `req_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
 		function i(e) {
-			e.source === window && e.data?.type === "WEB_RAG_LIST_FOLDERS_RESPONSE" && e.data?.requestId === r && (window.removeEventListener("message", i), e.data.success && e.data.data ? (console.log("WEB_RAG_LIST_FOLDERS_RESPONSE", e.data), t(e.data.data)) : n(Error(e.data.error ?? "Failed to retrieve folders from extension.")));
+			e.source === window && e.data?.type === "LIST_FOLDERS_RESPONSE" && e.data?.requestId === r && (window.removeEventListener("message", i), console.log(e.data), e.data.success && e.data.data ? (console.log("LIST_FOLDERS_RESPONSE", e.data), t(e.data.data)) : n(Error(e.data.error ?? "Failed to retrieve folders from extension.")));
 		}
 		window.addEventListener("message", i), window.postMessage({
 			type: "WEB_RAG_LIST_FOLDERS",
