@@ -1,0 +1,15 @@
+.surface-main {
+    @apply header-body-layout bg-[var(--color-surface-container)];
+}
+.surface-header {
+    @apply col gap-y-4 bg-[var(--color-surface)] p-2 pb-0 shadow-md;
+}
+.surface-footer {
+    @apply flex bg-[var(--color-surface)] p-2 shadow-md;
+}
+.surface-primary {
+    @apply rounded-lg border border-[var(--color-outline)] bg-[var(--color-surface)] p-4;
+}
+.surface-card {
+    @apply card flex flex-col p-8;
+}

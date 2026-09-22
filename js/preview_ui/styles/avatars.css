@@ -1,0 +1,16 @@
+.avatar {
+    @apply relative flex h-12 w-12 shrink-0 select-none items-center justify-center overflow-hidden rounded-full;
+}
+.avatar-sm {
+    @apply h-8 w-8;
+}
+.avatar-lg {
+    @apply h-14 w-14;
+}
+
+.avatar-fallback {
+    @apply flex h-full w-full items-center justify-center bg-linear-to-br from-[var(--color-avatar-gradient-from)] to-[var(--color-avatar-gradient-to)] text-sm font-semibold leading-none text-white;
+}
+.avatar img {
+    @apply h-full w-full object-cover;
+}

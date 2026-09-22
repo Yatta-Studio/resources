@@ -1,0 +1,10 @@
+.user-card {
+    @apply flex w-full items-center gap-4 p-4 transition-all duration-200 sm:p-5;
+}
+
+.card-interactive {
+    @apply cursor-pointer hover:border-[var(--color-outline-hover)] hover:shadow-md;
+}
+.card-interactive:focus-visible {
+    @apply outline-2 outline-offset-2 outline-[var(--color-primary)];
+}

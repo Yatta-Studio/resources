@@ -1,192 +1,437 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UserCard Preview</title>
+<html lang="en" class="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard Preview</title>
 
-    <!-- Tailwind (Play CDN — fine for previews, not for production) -->
-    <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Theme bootstrap: scope class set BEFORE first paint -->
+        <script>
+            document.documentElement.className =
+                localStorage.getItem("theme") ||
+                (matchMedia("(prefers-color-scheme: dark)").matches
+                    ? "dark"
+                    : "light");
+        </script>
 
-    <!-- React + ReactDOM (dev builds give better warnings) -->
-    <script
-      crossorigin
-      src="https://unpkg.com/react@18/umd/react.development.js"
-    ></script>
-    <script
-      crossorigin
-      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
-    ></script>
+        <!-- Compiled design system:
+         npx @tailwindcss/cli -i js/preview_ui/index.css -o js/preview_ui/dist.css --watch -->
+        <link rel="stylesheet" href="./dist.css" />
 
-    <!-- Compiles JSX in the browser -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  </head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
 
-  <body class="min-h-screen bg-gray-100">
-    <div id="root"></div>
+        <!-- No-bundler module resolution (?deps pins lucide's react peer to ours) -->
+        <script type="importmap">
+            {
+                "imports": {
+                    "react": "https://esm.sh/react@18.3.1",
+                    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1",
+                    "lucide-react": "https://esm.sh/lucide-react@0.469.0?deps=react@18.3.1",
+                    "htm": "https://esm.sh/htm@3.1.1"
+                }
+            }
+        </script>
 
-    <script type="text/babel">
-      const { useState } = React;
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
 
-      /* ============================================================
-       UserCard — same as the project version, with TypeScript
-       annotations stripped (in-browser Babel only handles JSX).
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel" data-type="module" data-presets="react">
+            import React, { useState } from "react";
+            import { createRoot } from "react-dom/client";
+            import Header from "./components/Header.js";
+            import {
+                BarChart3,
+                ChevronRight,
+                FolderKanban,
+                LayoutDashboard,
+                LogOut,
+                Plus,
+                Settings,
+                TrendingDown,
+                TrendingUp,
+                Users,
+            } from "lucide-react";
+
+            /* ============================================================
+       UserCard — unchanged; reused in the sidebar AND the team panel.
        ============================================================ */
+            function UserCard({
+                avatarUrl,
+                fullName,
+                username,
+                status,
+                onClick,
+            }) {
+                const [imgError, setImgError] = useState(false);
 
-      const statusStyles = {
-        online: "bg-green-500",
-        away: "bg-yellow-500",
-        offline: "bg-gray-400",
-      };
+                const initials = fullName
+                    .split(" ")
+                    .map((part) => part.charAt(0))
+                    .slice(0, 2)
+                    .join("")
+                    .toUpperCase();
 
-      function UserCard({ avatarUrl, fullName, username, status, onClick }) {
-        const [imgError, setImgError] = useState(false);
+                return (
+                    <div
+                        onClick={onClick}
+                        className={`user-card ${onClick ? "card-interactive" : ""}`}
+                    >
+                        <div className="relative shrink-0">
+                            <div className="avatar sm:h-14 sm:w-14">
+                                {avatarUrl && !imgError ? (
+                                    <img
+                                        src={avatarUrl}
+                                        alt={fullName}
+                                        onError={() => setImgError(true)}
+                                    />
+                                ) : (
+                                    <span className="avatar-fallback">
+                                        {initials}
+                                    </span>
+                                )}
+                            </div>
+                            {status && (
+                                <span
+                                    className="status-dot"
+                                    data-status={status}
+                                    title={status}
+                                />
+                            )}
+                        </div>
 
-        const initials = fullName
-          .split(" ")
-          .map((part) => part.charAt(0))
-          .slice(0, 2)
-          .join("")
-          .toUpperCase();
+                        <div className="min-w-0">
+                            <p className="text-ui-strong truncate">
+                                {fullName}
+                            </p>
+                            <p className="text-ui-meta truncate">@{username}</p>
+                        </div>
+                    </div>
+                );
+            }
 
-        return (
-          <div
-            onClick={onClick}
-            className={`flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-200 hover:border-gray-300 hover:shadow-md sm:p-5 ${
-              onClick ? "cursor-pointer" : ""
-            }`}
-          >
-            <div className="relative shrink-0">
-              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-sm font-semibold text-white sm:h-14 sm:w-14">
-                {avatarUrl && !imgError ? (
-                  <img
-                    src={avatarUrl}
-                    alt={fullName}
-                    className="h-full w-full object-cover"
-                    onError={() => setImgError(true)}
-                  />
-                ) : (
-                  initials
-                )}
-              </div>
-              {status && (
-                <span
-                  className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white ${statusStyles[status]}`}
-                  title={status}
-                />
-              )}
-            </div>
+            /* ========================== Demo data ========================== */
 
-            <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-gray-900 sm:text-base">
-                {fullName}
-              </p>
-              <p className="truncate text-xs text-gray-500 sm:text-sm">
-                @{username}
-              </p>
-            </div>
-          </div>
-        );
-      }
+            const currentUser = {
+                fullName: "Sarah Chen",
+                username: "sarahc",
+                status: "online",
+                avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg",
+            };
 
-      /* ========================== Demo data ========================== */
+            const navItems = [
+                { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+                { id: "team", label: "Team", icon: Users },
+                { id: "projects", label: "Projects", icon: FolderKanban },
+                { id: "reports", label: "Reports", icon: BarChart3 },
+                { id: "settings", label: "Settings", icon: Settings },
+            ];
 
-      const users = [
-        {
-          id: 1,
-          fullName: "Sarah Chen",
-          username: "sarahc",
-          status: "online",
-          avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg",
-        },
-        {
-          id: 2,
-          fullName: "Marcus Johnson",
-          username: "mjohnson",
-          status: "online",
-          avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg",
-        },
-        {
-          id: 3,
-          fullName: "Priya Patel",
-          username: "priyap",
-          status: "away",
-          avatarUrl: "https://randomuser.me/api/portraits/women/65.jpg",
-        },
-        {
-          id: 4,
-          fullName: "Diego Ramírez",
-          username: "dramirez",
-          status: "offline",
-          avatarUrl: "https://randomuser.me/api/portraits/men/75.jpg",
-        },
-        {
-          id: 5,
-          fullName: "Amara Okafor",
-          username: "aokafor",
-          status: "online",
-        }, // no avatar → initials fallback
-        {
-          id: 6,
-          fullName: "Tom Wilson",
-          username: "twilson",
-          avatarUrl: "https://randomuser.me/api/portraits/men/11.jpg",
-        }, // no status dot
-        {
-          id: 7,
-          fullName: "A Really Long Display Name For Truncation",
-          username: "an_extremely_long_username_that_truncates",
-          status: "away",
-          avatarUrl: "https://randomuser.me/api/portraits/women/12.jpg",
-        },
-        {
-          id: 8,
-          fullName: "Elena Petrova",
-          username: "epetrova",
-          status: "online",
-          avatarUrl: "https://broken-url.example/404.jpg",
-        }, // broken image → onError fallback
-      ];
+            const stats = [
+                {
+                    label: "Active users",
+                    value: "1,284",
+                    delta: "+12.4% this week",
+                    dir: "up",
+                    good: true,
+                },
+                {
+                    label: "Projects shipped",
+                    value: "23",
+                    delta: "+3 this week",
+                    dir: "up",
+                    good: true,
+                },
+                {
+                    label: "Open reviews",
+                    value: "7",
+                    delta: "+2 vs last week",
+                    dir: "up",
+                    good: false,
+                },
+                {
+                    label: "Avg. response",
+                    value: "2.4h",
+                    delta: "-18m vs last week",
+                    dir: "down",
+                    good: true,
+                },
+            ];
 
-      /* ========================== Preview app ========================== */
+            const badgeClasses = {
+                active: "bg-[var(--color-success-container)] text-[var(--color-on-success-container)]",
+                review: "bg-[var(--color-warning-container)] text-[var(--color-on-warning-container)]",
+                archived:
+                    "bg-[var(--color-disabled-surface)] text-[var(--color-disabled-on-surface)]",
+            };
 
-      function App() {
-        const [lastClicked, setLastClicked] = useState(null);
+            const projects = [
+                {
+                    id: 1,
+                    name: "Design system rollout",
+                    desc: "Migrating preview UI to token classes",
+                    status: "active",
+                },
+                {
+                    id: 2,
+                    name: "Mobile onboarding",
+                    desc: "Redraw of the first-run flow",
+                    status: "review",
+                },
+                {
+                    id: 3,
+                    name: "Legacy API sunset",
+                    desc: "v1 endpoints → deprecation notices",
+                    status: "review",
+                },
+                {
+                    id: 4,
+                    name: "Q3 analytics report",
+                    desc: "Archived after leadership review",
+                    status: "archived",
+                },
+            ];
 
-        return (
-          <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-            <header className="mb-8">
-              <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                Team Members
-              </h1>
-              <p className="mt-1 text-sm text-gray-500">
-                Resize the window to watch the grid collapse (4 → 2 → 1
-                columns). Click a card to fire its onClick handler.
-              </p>
-              {lastClicked && (
-                <p className="mt-2 text-sm font-medium text-indigo-600">
-                  Last clicked: {lastClicked}
-                </p>
-              )}
-            </header>
+            /* Keeps the regression fixtures: truncation (user 7), initials
+         fallback (Amara), broken-image fallback (Elena), offline dot. */
+            const team = [
+                {
+                    id: 2,
+                    fullName: "Marcus Johnson",
+                    username: "mjohnson",
+                    status: "online",
+                    avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+                },
+                {
+                    id: 4,
+                    fullName: "Diego Ramírez",
+                    username: "dramirez",
+                    status: "offline",
+                    avatarUrl: "https://randomuser.me/api/portraits/men/75.jpg",
+                },
+                {
+                    id: 7,
+                    fullName: "A Really Long Display Name For Truncation",
+                    username: "an_extremely_long_username_that_truncates",
+                    status: "away",
+                    avatarUrl:
+                        "https://randomuser.me/api/portraits/women/12.jpg",
+                },
+                {
+                    id: 5,
+                    fullName: "Amara Okafor",
+                    username: "aokafor",
+                    status: "online",
+                },
+                {
+                    id: 8,
+                    fullName: "Elena Petrova",
+                    username: "epetrova",
+                    status: "online",
+                    avatarUrl: "https://broken-url.example/404.jpg",
+                },
+            ];
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {users.map((user) => (
-                <UserCard
-                  key={user.id}
-                  avatarUrl={user.avatarUrl}
-                  fullName={user.fullName}
-                  username={user.username}
-                  status={user.status}
-                  onClick={() => setLastClicked(`@${user.username}`)}
-                />
-              ))}
-            </div>
-          </div>
-        );
-      }
+            /* ========================== App ========================== */
 
-      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-    </script>
-  </body>
+            function App() {
+                const [activeNav, setActiveNav] = useState("dashboard");
+                const [lastClicked, setLastClicked] = useState(null);
+                const [theme, setTheme] = useState(
+                    document.documentElement.classList.contains("dark")
+                        ? "dark"
+                        : "light",
+                );
+
+                const toggleTheme = () => {
+                    const next = theme === "dark" ? "light" : "dark";
+                    document.documentElement.classList.remove("dark", "light");
+                    document.documentElement.classList.add(next);
+                    localStorage.setItem("theme", next);
+                    setTheme(next);
+                };
+
+                return (
+                    <div className="layout-sidebar-split h-screen w-full overflow-hidden grid-rows-[minmax(0,1fr)]">
+                        {/* ================= Sidebar ================= */}
+                        <aside className="col border-r border-[var(--color-outline)] bg-[var(--color-surface)]">
+                            <div className="border-b border-[var(--color-outline)] p-3">
+                                <UserCard
+                                    avatarUrl={currentUser.avatarUrl}
+                                    fullName={currentUser.fullName}
+                                    username={currentUser.username}
+                                    status={currentUser.status}
+                                    onClick={() =>
+                                        setLastClicked("@sarahc · profile")
+                                    }
+                                />
+                            </div>
+
+                            {/* overflow≠visible → auto min-size 0, so flex-1 actually shrinks */}
+                            <nav className="col flex-1 gap-1 overflow-y-auto p-3">
+                                {navItems.map((item) => (
+                                    <button
+                                        key={item.id}
+                                        type="button"
+                                        onClick={() => setActiveNav(item.id)}
+                                        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                                            activeNav === item.id
+                                                ? "bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)]"
+                                                : "text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-on-surface)]"
+                                        }`}
+                                    >
+                                        <item.icon
+                                            size={16}
+                                            className="shrink-0"
+                                        />
+                                        {item.label}
+                                    </button>
+                                ))}
+                            </nav>
+
+                            <div className="layout-row-left-fill gap-3 border-t border-[var(--color-outline)] p-3">
+                                <span className="text-caption text-[var(--color-on-surface-muted)]">
+                                    preview · v0.1.0
+                                </span>
+                                <button
+                                    type="button"
+                                    title="Sign out"
+                                    aria-label="Sign out"
+                                    className="btn-round-icon h-8 w-8 text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-hover)]"
+                                >
+                                    <LogOut size={14} />
+                                </button>
+                            </div>
+                        </aside>
+
+                        {/* ================= Main ================= */}
+                        {/* surface-main = header-body-layout + container bg:
+                   header pinned, LAST child scrolls */}
+                        <main className="surface-main">
+                            <Header
+                                title="Dashboard"
+                                subtitle="Team & project overview"
+                                theme={theme}
+                                onToggleTheme={toggleTheme}
+                            />
+
+                            {/* LAST child → this is the scroll container */}
+                            <div className="col gap-6 p-6">
+                                <section
+                                    className="layout-auto-grid"
+                                    aria-label="Key metrics"
+                                >
+                                    {stats.map((s) => (
+                                        <div
+                                            key={s.label}
+                                            className="surface-primary col gap-1"
+                                        >
+                                            <span className="text-ui-label text-[var(--color-on-surface-muted)]">
+                                                {s.label}
+                                            </span>
+                                            <span className="text-heading-lg">
+                                                {s.value}
+                                            </span>
+                                            <span
+                                                className={`inline-flex items-center gap-1 text-caption ${
+                                                    s.good
+                                                        ? "text-[var(--color-success)]"
+                                                        : "text-[var(--color-error)]"
+                                                }`}
+                                            >
+                                                {s.dir === "up" ? (
+                                                    <TrendingUp size={12} />
+                                                ) : (
+                                                    <TrendingDown size={12} />
+                                                )}
+                                                {s.delta}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </section>
+
+                                {/* items-start: panels keep natural height instead of stretching */}
+                                <section className="layout-auto-grid items-start">
+                                    <div className="surface-primary col gap-3">
+                                        <div className="layout-row-left-fill">
+                                            <h2 className="text-heading-sm">
+                                                Team
+                                            </h2>
+                                            <a
+                                                href="#team"
+                                                className="anchor_link"
+                                            >
+                                                View all
+                                            </a>
+                                        </div>
+                                        {team.map((u) => (
+                                            <UserCard
+                                                key={u.id}
+                                                avatarUrl={u.avatarUrl}
+                                                fullName={u.fullName}
+                                                username={u.username}
+                                                status={u.status}
+                                                onClick={() =>
+                                                    setLastClicked(
+                                                        `@${u.username}`,
+                                                    )
+                                                }
+                                            />
+                                        ))}
+                                    </div>
+
+                                    <div className="surface-primary col gap-3">
+                                        <div className="layout-row-left-fill">
+                                            <h2 className="text-heading-sm">
+                                                Recent projects
+                                            </h2>
+                                            <a
+                                                href="#projects"
+                                                className="anchor_link"
+                                            >
+                                                View all
+                                            </a>
+                                        </div>
+                                        {projects.map((p) => (
+                                            <div
+                                                key={p.id}
+                                                className="layout-row-left-fill gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-[var(--color-surface-hover)]"
+                                            >
+                                                <div className="min-w-0">
+                                                    <p className="text-ui-strong truncate">
+                                                        {p.name}
+                                                    </p>
+                                                    <p className="text-ui-meta truncate">
+                                                        {p.desc}
+                                                    </p>
+                                                </div>
+                                                <span
+                                                    className={`shrink-0 rounded-full px-2 py-1 text-caption capitalize ${badgeClasses[p.status]}`}
+                                                >
+                                                    {p.status}
+                                                </span>
+                                                <ChevronRight
+                                                    size={16}
+                                                    className="shrink-0 text-[var(--color-on-surface-muted)]"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            </div>
+                        </main>
+                    </div>
+                );
+            }
+
+            createRoot(document.getElementById("root")).render(<App />);
+        </script>
+    </body>
 </html>

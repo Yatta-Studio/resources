@@ -1,13 +1,29 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tokens + dark variant (unlayered — @theme is routed by Tailwind itself) */
+@import "./styles/theme.css";
+
+/* Components — sit below utilities, so `sm:p-5` still overrides `.user-card` */
+@import "./styles/buttons.css" layer(components);
+@import "./styles/surfaces.css" layer(components);
+@import "./styles/cards.css" layer(components);
+@import "./styles/avatars.css" layer(components);
+
+/* Utilities — top of the cascade */
+@import "./styles/typography.css" layer(utilities);
+@import "./styles/layouts.css" layer(utilities);
+
+/* @utility primitives — imported WITHOUT layer(); @utility manages its
+   own placement and must stay top-level. */
+@import "./styles/primitives.css";
 
 @layer base {
     html,
     body {
-        @apply flex-full inter bg-[var(--color-surface)] text-base text-[var(--color-on-surface)];
+        @apply flex-full bg-[var(--color-surface)] text-base text-[var(--color-on-surface)];
 
         #root {
-            @apply flex-full;
+            @apply flex-full font-sans;
         }
     }
 
@@ -18,151 +34,5 @@
     h5,
     h6 {
         color: var(--color-on-surface);
-    }
-}
-
-@layer utilities {
-    /* ==========================================================================
-     TEXT STYLES
-     ========================================================================== */
-    /* Display Styles (Hero/Marketing) */
-    .text-display-lg {
-        @apply text-6xl leading-none font-bold tracking-tight;
-    }
-    .text-display-md {
-        @apply text-5xl leading-tight font-bold tracking-tight;
-    }
-
-    /* Heading Styles (Structured Layout) */
-    .text-heading-xl {
-        @apply text-4xl leading-snug font-semibold tracking-tight;
-    }
-    .text-heading-lg {
-        @apply text-3xl leading-snug font-semibold tracking-tight;
-    }
-    .text-heading-md {
-        @apply text-2xl leading-relaxed font-medium tracking-normal;
-    }
-    .text-heading-sm {
-        @apply text-xl leading-relaxed font-medium tracking-normal;
-    }
-
-    /* Body Styles (Standard Reading Content) */
-    .text-body-lg {
-        @apply text-lg leading-relaxed font-normal tracking-normal;
-    }
-    .text-body-md {
-        @apply text-base leading-relaxed font-normal tracking-normal;
-    }
-    .text-body-sm {
-        @apply text-sm leading-normal font-normal tracking-normal;
-    }
-
-    /* UI Elements (Interactive Components) */
-    .text-ui-label {
-        @apply text-sm font-medium tracking-wider uppercase;
-    }
-    .text-ui-button {
-        @apply text-sm font-semibold tracking-normal;
-    }
-
-    /* Caption / Utility Styles (Footnotes & Metadata) */
-    .text-caption {
-        @apply text-xs leading-none font-normal tracking-normal;
-    }
-
-    /* ==========================================================================
-     APP LAYOUT STYLES
-     ========================================================================== */
-    .layout-stream-frame {
-        @apply flex-full flex-col;
-    }
-    .layout-stream-body {
-        @apply w-full flex-grow;
-    }
-
-    /* ==========================================================================
-     APP LAYOUT STYLES
-     ========================================================================== */
-    .layout-holy-grail {
-        @apply grid min-h-screen grid-rows-[auto_1fr_auto];
-    }
-    .layout-sidebar-split {
-        @apply grid min-h-screen grid-cols-[16rem_1fr];
-    }
-    .layout-auto-grid {
-        @apply grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6;
-    }
-    .layout-centered-wrapper {
-        @apply flex min-h-screen items-center justify-center p-4;
-    }
-
-    /* ==========================================================================
-     ROW LAYOUT STYLES
-     ========================================================================== */
-    /* Row Variant 1: Left item takes all remaining space */
-    .layout-row-left-fill {
-        @apply flex w-full items-center;
-    }
-    .layout-row-left-fill > *:first-child {
-        @apply flex-grow;
-    }
-
-    /* Row Variant 2: Middle item takes all remaining space */
-    .layout-row-center-fill {
-        @apply flex w-full items-center;
-    }
-    .layout-row-center-fill > *:nth-child(2) {
-        @apply flex-grow;
-    }
-
-    /* Row Variant 3: All elements pushed/aligned completely to the right side */
-    .layout-row-right {
-        @apply flex w-full items-center justify-end;
-    }
-
-    /* ==========================================================================
-     UTIL LAYOUT STYLES
-     ========================================================================== */
-    .flex-full {
-        @apply flex h-full w-full;
-    }
-}
-
-@layer components {
-    .anchor_link {
-        @apply text-primary inline-flex items-center text-sm font-medium hover:underline;
-    }
-
-    .btn-primary {
-        @apply flex items-center justify-center gap-1 rounded-lg border border-[var(--color-primary)] bg-[var(--color-primary)] px-4 py-2 text-[var(--color-on-primary)];
-    }
-
-    .btn-secondary {
-        @apply flex items-center justify-center gap-1 rounded-lg border border-[var(--color-outline)] bg-transparent px-4 py-2 text-[var(--color-on-surface)] transition-colors hover:bg-[var(--color-surface-hover)];
-    }
-
-    .btn-round-icon {
-        @apply flex items-center justify-center rounded-full border;
-    }
-
-    .surface-main {
-        @apply header-body-layout bg-[var(--color-surface-container)];
-    }
-
-    .surface-header {
-        @apply col gap-y-4 bg-[var(--color-surface)] p-2 pb-0 shadow-md;
-    }
-
-    .surface-footer {
-        @apply flex bg-[var(--color-surface)] p-2 shadow-md;
-    }
-
-    .surface-primary {
-        @apply rounded-lg border border-[var(--color-outline)] bg-[var(--color-surface)] p-4;
-    }
-
-    .surface-card {
-        @apply box-border flex flex-col rounded-xl border bg-[var(--color-surface-card)] p-8 shadow-sm;
     }
 }

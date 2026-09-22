@@ -13,7 +13,7 @@ export const Header = ({ viewMode, onViewModeChange }: HeaderProps) => {
     return (
         <header className="flex items-center justify-between h-14 px-4 bg-surface border-b border-outline shrink-0">
             <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                     <FileText className="size-5 text-on-surface" />
                     <h3 className="text-lg font-semibold m-0 leading-none">
                         Noto
@@ -27,7 +27,7 @@ export const Header = ({ viewMode, onViewModeChange }: HeaderProps) => {
                     onClick={() => onViewModeChange("editor")}
                     className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md cursor-pointer transition-colors ${
                         viewMode === "editor"
-                            ? "bg-surface-card text-on-surface shadow-sm"
+                            ? "bg-(--color-primary) text-(--color-on-primary)"
                             : "text-on-surface-variant hover:text-on-surface"
                     }`}
                 >
@@ -39,7 +39,7 @@ export const Header = ({ viewMode, onViewModeChange }: HeaderProps) => {
                     onClick={() => onViewModeChange("preview")}
                     className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md cursor-pointer transition-colors ${
                         viewMode === "preview"
-                            ? "bg-surface-card text-on-surface shadow-sm"
+                            ? "bg-(--color-primary) text-(--color-on-primary)"
                             : "text-on-surface-variant hover:text-on-surface"
                     }`}
                 >
@@ -51,7 +51,7 @@ export const Header = ({ viewMode, onViewModeChange }: HeaderProps) => {
                     onClick={() => onViewModeChange("split")}
                     className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md cursor-pointer transition-colors ${
                         viewMode === "split"
-                            ? "bg-surface-card text-on-surface shadow-sm"
+                            ? "bg-(--color-primary) text-(--color-on-primary)"
                             : "text-on-surface-variant hover:text-on-surface"
                     }`}
                 >

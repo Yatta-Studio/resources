@@ -1,0 +1,42 @@
+/* ==========================================================================
+   PAGE LAYOUTS
+   ========================================================================== */
+.layout-stream-frame {
+    @apply flex-full flex-col;
+}
+.layout-stream-body {
+    @apply w-full flex-grow;
+}
+.layout-holy-grail {
+    @apply grid min-h-screen grid-rows-[auto_1fr_auto];
+}
+.layout-sidebar-split {
+    @apply grid min-h-screen grid-cols-[16rem_1fr];
+}
+.layout-auto-grid {
+    @apply grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6;
+}
+.layout-centered-wrapper {
+    @apply flex min-h-screen items-center justify-center p-4;
+}
+
+/* ==========================================================================
+   ROW LAYOUTS
+   ========================================================================== */
+.layout-row-left-fill {
+    @apply flex w-full items-center;
+}
+.layout-row-left-fill > *:first-child {
+    @apply flex-grow;
+}
+
+.layout-row-center-fill {
+    @apply flex w-full items-center;
+}
+.layout-row-center-fill > *:nth-child(2) {
+    @apply flex-grow;
+}
+
+.layout-row-right {
+    @apply flex w-full items-center justify-end;
+}

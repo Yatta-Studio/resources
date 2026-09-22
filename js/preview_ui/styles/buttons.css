@@ -1,0 +1,15 @@
+.anchor_link {
+    @apply text-[var(--color-primary)] inline-flex items-center text-sm font-medium hover:underline;
+}
+
+.btn-primary {
+    @apply flex items-center justify-center gap-1 rounded-lg border border-[var(--color-primary)] bg-[var(--color-primary)] px-4 py-2 text-[var(--color-on-primary)];
+}
+
+.btn-secondary {
+    @apply flex items-center justify-center gap-1 rounded-lg border border-[var(--color-outline)] bg-transparent px-4 py-2 text-[var(--color-on-surface)] transition-colors hover:bg-[var(--color-surface-hover)];
+}
+
+.btn-round-icon {
+    @apply flex items-center justify-center rounded-full border;
+}

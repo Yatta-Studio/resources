@@ -1,0 +1,51 @@
+/* Display (hero/marketing) */
+.text-display-lg {
+    @apply text-6xl leading-none font-bold tracking-tight;
+}
+.text-display-md {
+    @apply text-5xl leading-tight font-bold tracking-tight;
+}
+
+/* Headings (structured layout) */
+.text-heading-xl {
+    @apply text-4xl leading-snug font-semibold tracking-tight;
+}
+.text-heading-lg {
+    @apply text-3xl leading-snug font-semibold tracking-tight;
+}
+.text-heading-md {
+    @apply text-2xl leading-relaxed font-medium tracking-normal;
+}
+.text-heading-sm {
+    @apply text-xl leading-relaxed font-medium tracking-normal;
+}
+
+/* Body (reading content) */
+.text-body-lg {
+    @apply text-lg leading-relaxed font-normal tracking-normal;
+}
+.text-body-md {
+    @apply text-base leading-relaxed font-normal tracking-normal;
+}
+.text-body-sm {
+    @apply text-sm leading-normal font-normal tracking-normal;
+}
+
+/* UI elements */
+.text-ui-label {
+    @apply text-sm font-medium tracking-wider uppercase;
+}
+.text-ui-button {
+    @apply text-sm font-semibold tracking-normal;
+}
+.text-ui-strong {
+    @apply text-sm leading-normal font-semibold tracking-normal text-[var(--color-on-surface)];
+}
+.text-ui-meta {
+    @apply text-xs leading-normal font-normal tracking-normal text-[var(--color-on-surface-muted)];
+}
+
+/* Captions / metadata */
+.text-caption {
+    @apply text-xs leading-none font-normal tracking-normal;
+}

@@ -1,0 +1,157 @@
+/* Dark variant wiring (moved from index.css — it belongs with the tokens) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: "Lexend", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+.light {
+    --color-surface: #f8fafc;
+    /* slate-50 */
+    --color-surface-card: #ffffff;
+    /* white */
+    --color-surface-low: #f1f5f9;
+    /* slate-100 */
+    --color-surface-container: #e2e8f0;
+    /* slate-200 */
+    --color-surface-variant: #cbd5e1;
+    /* slate-300 */
+    --color-surface-container-lowest: #f8fafc;
+    /* slate-50 */
+    --color-surface-container-low: #f1f5f9;
+    /* slate-100 */
+    --color-surface-container-high: #e2e8f0;
+    /* slate-200 */
+    --color-surface-container-highest: #cbd5e1;
+    /* slate-300 */
+    --color-surface-bright: #ffffff;
+    /* white */
+    --color-on-surface: #1e293b;
+    /* slate-800 (Capped at 800) */
+    --color-on-surface-variant: #475569;
+    /* slate-600 */
+    --color-outline: rgba(30, 41, 59, 0.15);
+    /* slate-800 with 15% opacity */
+    --color-outline-variant: rgba(30, 41, 59, 0.08);
+    /* slate-800 with 8% opacity */
+
+    /* Core Branding & Action Colors (Indigo Base) */
+    --color-primary: #2563eb; /* blue-600 (Main buttons, active links) */
+    --color-on-primary: #ffffff; /* white text over blue */
+    --color-primary-container: #dbeafe; /* blue-100 (Subtle badge/container background) */
+    --color-on-primary-container: #1e3a8a; /* blue-900 (Dark text over blue container) */
+
+    /* Secondary (Slate Palette) */
+    --color-secondary: #475569; /* slate-600 (Secondary buttons, subtle options) */
+    --color-on-secondary: #ffffff; /* white text over slate */
+    --color-secondary-container: #f1f5f9; /* slate-100 (Subtle chip/container background) */
+    --color-on-secondary-container: #0f172a; /* slate-900 (Dark text over slate container) */
+
+    /* Semantic / Feedback Statuses */
+    --color-error: #dc2626; /* red-600 (Destructive state) */
+    --color-on-error: #ffffff; /* white text over red */
+    --color-error-container: #fee2e2; /* red-100 (Alert banner background) */
+    --color-on-error-container: #7f1d1d; /* red-900 (Dark text over red alert) */
+
+    --color-warning: #d97706; /* amber-600 (Caution state) */
+    --color-on-warning: #ffffff; /* white text over amber */
+    --color-warning-container: #fef3c7; /* amber-100 (Warning banner background) */
+    --color-on-warning-container: #78350f; /* amber-900 (Dark text over amber warning) */
+
+    --color-success: #16a34a; /* green-600 (Positive/Complete state) */
+    --color-on-success: #ffffff; /* white text over green */
+    --color-success-container: #dcfce7; /* green-100 (Success banner background) */
+    --color-on-success-container: #14532d; /* green-900 (Dark text over green banner) */
+
+    /* Interactive States & Accessibility */
+    --color-focus-ring: #2563eb; /* blue-600 (Keyboard outline color matching primary) */
+    --color-disabled-surface: #e2e8f0; /* slate-200 (Inactive input/button surface) */
+    --color-disabled-on-surface: #94a3b8; /* slate-400 (Muted inactive text) */
+
+    /* Inverse Elements (e.g., Tooltips or Dark Snackbars on Light Layout) */
+    --color-inverse-surface: #0f172a; /* slate-900 */
+    --color-inverse-on-surface: #f8fafc; /* slate-50 */
+    --color-inverse-primary: #60a5fa; /* blue-400 (Bright primary accent for inverse dark background) */
+
+    /* Referenced by components — previously missing */
+    --color-surface-hover: #f1f5f9; /* slate-100 */
+    --color-outline-hover: rgba(30, 41, 59, 0.3);
+    --color-on-surface-muted: #64748b; /* slate-500 */
+    --color-avatar-gradient-from: #6366f1; /* indigo-500 */
+    --color-avatar-gradient-to: #9333ea; /* purple-600 */
+}
+
+.dark {
+    --color-surface: #1e293b;
+    /* slate-900 */
+    --color-surface-card: #293749;
+    /* slate-800 */
+    --color-surface-low: #334155;
+    /* slate-700 */
+    --color-surface-container: #0f172a;
+    /* slate-700 */
+    --color-surface-variant: #475569;
+    /* slate-600 */
+    --color-surface-container-lowest: #1e293b;
+    /* slate-800 (Capped at 800 minimum) */
+    --color-surface-container-low: #1e293b;
+    /* slate-800 */
+    --color-surface-container-high: #334155;
+    /* slate-700 */
+    --color-surface-container-highest: #475569;
+    /* slate-600 */
+    --color-surface-bright: #64748b;
+    /* slate-500 */
+    --color-on-surface: #f8fafc;
+    /* slate-50 */
+    --color-on-surface-variant: #cbd5e1;
+    /* slate-300 */
+    --color-outline: rgba(248, 250, 252, 0.15);
+    /* slate-50 with 15% opacity */
+    --color-outline-variant: rgba(248, 250, 252, 0.08);
+    /* slate-50 with 8% opacity */
+
+    /* Core Branding & Action Colors (Lighter Blue / Slate) */
+    --color-primary: #60a5fa; /* blue-400 (Brighter pastel blue for high contrast) */
+    --color-on-primary: #0f172a; /* slate-900 (Dark text for readability over light blue) */
+    --color-primary-container: #1e3a8a; /* blue-900 (Deep blue container background) */
+    --color-on-primary-container: #dbeafe; /* blue-100 (Bright blue text over deep container) */
+
+    /* Secondary (Slate Palette) */
+    --color-secondary: #94a3b8; /* slate-400 (Muted interactive accents) */
+    --color-on-secondary: #0f172a; /* slate-900 (Dark text over light slate) */
+    --color-secondary-container: #1e293b; /* slate-800 (Deep slate container background) */
+    --color-on-secondary-container: #f1f5f9; /* slate-100 (Bright text over deep container) */
+
+    /* Semantic / Feedback Statuses (Muted, Luminescent Weights) */
+    --color-error: #f87171; /* red-400 (Destructive actions) */
+    --color-on-error: #7f1d1d; /* red-900 (Dark crimson text for clear contrast) */
+    --color-error-container: #4c0519; /* red-950 (Subtle dark background for alert banners) */
+    --color-on-error-container: #fca5a5; /* red-300 */
+
+    --color-warning: #fbbf24; /* amber-400 (Caution alerts) */
+    --color-on-warning: #78350f; /* amber-900 (Dark text) */
+    --color-warning-container: #451a03; /* amber-950 (Subtle dark warning background) */
+    --color-on-warning-container: #fde68a; /* amber-200 */
+
+    --color-success: #4ade80; /* green-400 (Positive confirmations) */
+    --color-on-success: #052e16; /* green-950 (Dark green text) */
+    --color-success-container: #022c22; /* green-950 (Subtle dark container) */
+    --color-on-success-container: #a7f3d0; /* green-200 */
+
+    /* Interactive States & Accessibility */
+    --color-focus-ring: #60a5fa; /* blue-400 (Matches primary for consistency) */
+    --color-disabled-surface: #334155; /* slate-700 (Dimmed out inactive buttons) */
+    --color-disabled-on-surface: #64748b; /* slate-500 (Ghosted out inactive text) */
+
+    /* Inverse Elements (Light elements popping out of the dark interface) */
+    --color-inverse-surface: #f8fafc; /* slate-50 (Light background in a dark theme) */
+    --color-inverse-on-surface: #0f172a; /* slate-900 (Dark text over inverse light background) */
+    --color-inverse-primary: #2563eb; /* blue-600 (Darker primary for buttons inside light inverse surfaces) */
+
+    --color-surface-hover: #334155; /* slate-700 */
+    --color-outline-hover: rgba(248, 250, 252, 0.3);
+    --color-on-surface-muted: #94a3b8; /* slate-400 */
+    --color-avatar-gradient-from: #818cf8; /* indigo-400 */
+    --color-avatar-gradient-to: #a855f7; /* purple-500 */
+}

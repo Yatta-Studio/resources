@@ -1,0 +1,36 @@
+/* ==========================================================================
+   PRIMITIVES — registered via @utility:
+   ✓ usable with variants (sm:card-shell, lg:flex-full)
+   ✓ @apply-able from any file in the build
+   Imported unlayered — @utility handles its own cascade placement.
+   ========================================================================== */
+@utility flex-full {
+    @apply flex h-full w-full;
+}
+
+@utility col {
+    @apply flex flex-col;
+}
+
+@utility card {
+    @apply bg-[var(--color-surface-card)] box-border rounded-xl border border-[var(--color-outline)]  shadow-sm;
+}
+
+/* Structural layouts — @utility (not plain classes) because .surface-main
+   @apply's header-body-layout, and v4 @apply only resolves registered
+   utilities. */
+@utility header-body-layout {
+    @apply col w-full h-full overflow-hidden;
+
+    & > :last-child {
+        @apply col flex-1 overflow-y-auto;
+    }
+}
+
+@utility body-footer-layout {
+    @apply col w-full h-full overflow-hidden;
+
+    & > :first-child {
+        @apply col flex-1 overflow-y-auto;
+    }
+}
