@@ -196,8 +196,6 @@
                 },
             ];
 
-            /* Keeps the regression fixtures: truncation (user 7), initials
-         fallback (Amara), broken-image fallback (Elena), offline dot. */
             const team = [
                 {
                     id: 2,
@@ -256,9 +254,8 @@
                 };
 
                 return (
-                    <div className="layout-sidebar-split h-screen w-full overflow-hidden grid-rows-[minmax(0,1fr)]">
-                        {/* ================= Sidebar ================= */}
-                        <aside className="col border-r border-[var(--color-outline)] bg-[var(--color-surface)]">
+                    <div className="layout-sidebar-split h-screen w-full overflow-hidden">
+                        <aside className="col border-r border-[var(--color-outline)]">
                             <div className="border-b border-[var(--color-outline)] p-3">
                                 <UserCard
                                     avatarUrl={currentUser.avatarUrl}
@@ -271,7 +268,7 @@
                                 />
                             </div>
 
-                            {/* overflow≠visible → auto min-size 0, so flex-1 actually shrinks */}
+
                             <nav className="col flex-1 gap-1 overflow-y-auto p-3">
                                 {navItems.map((item) => (
                                     <button
@@ -308,9 +305,6 @@
                             </div>
                         </aside>
 
-                        {/* ================= Main ================= */}
-                        {/* surface-main = header-body-layout + container bg:
-                   header pinned, LAST child scrolls */}
                         <main className="surface-main">
                             <Header
                                 title="Dashboard"

@@ -1,3 +1,6 @@
+/*
+    Icons: lobehub.com
+*/
 var www_chatbots = [
     {
         name: "Gemini",
