@@ -34,7 +34,7 @@ RESUME = {
         (
             "Backend Development & APIs",
             "Advanced",
-            "TypeScript, Node.js, Python, PHP, SQL",
+            "TypeScript, Node.js, Python, Java/Spring, SQL",
         ),
         (
             "Frontend & UI/UX Engineering",
@@ -59,9 +59,19 @@ RESUME = {
     ],
     "experience": [
         {
+            "company": "Private Consulting",
+            "dates": "June 2026 to Present",
+            "role": "RTL Design & Verification Consultant",
+            "location": "Austin, TX",
+            "bullets": [
+                "Debugged RISC-V test failures on the Ariane (CVA6) RV64GC core and OpenPiton platform, tracing root causes through waveforms and simulation logs across pipeline, MMU, cache, and memory subsystem behavior",
+                "Built and configured multi-core RISC-V models using OpenPiton's P-Mesh NoC with Ariane tiles, parameterizing core count and topology for scalable simulation and verification",
+            ],
+        },
+        {
             "company": "Edlink",
             "dates": "June 2023 to November 2025",
-            "role": "Software Engineer / Technical Support Lead",
+            "role": "Software Engineer / Technical Account Solution Engineer",
             "location": "Austin, TX",
             "link": "https://ed.link",
             "bullets": [
@@ -129,6 +139,8 @@ RESUME = {
                 "Created and developed Visualize.js, an award-winning JavaScript framework for embedding interactive dashboards and reports into external web applications.",
                 "Developed big data UI table components capable of rendering over 100,000 tabular data rows efficiently in the browser.",
                 "Engineered cross-browser charting components and reduced overall CSS payload sizes by 25% across Jaspersoft Server web apps.",
+                "Designed and built Java/Spring REST APIs that served query results and report data to the dashboard and visualization front ends.",
+                "Developed server-side Java services for rendering reports to PDF, enabling consistent export of data visualizations from the Jaspersoft platform.",
             ],
         },
         {

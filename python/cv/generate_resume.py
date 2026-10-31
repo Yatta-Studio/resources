@@ -23,7 +23,7 @@ from reportlab.platypus import (
     TableStyle,
     Image,
 )
-from resume import RESUME
+from gt_resume import RESUME
 
 # ---------------------------------------------------------------------------
 # LAYOUT CONSTANTS
@@ -374,8 +374,6 @@ def build_pdf(output_path, photo_path=None):
         )
 
         for job in RESUME["experience"]:
-            job_elements = []
-
             left_col = [
                 Paragraph(f'<b>{job["company"]}</b>', styles["h3"]),
                 Paragraph(job["role"], styles["h3_sub"]),
@@ -401,22 +399,75 @@ def build_pdf(output_path, photo_path=None):
                     ]
                 )
             )
-            job_elements.append(header_table)
 
+            # Build the pieces that belong to this job, in order.
+            job_header = [header_table]
             if "link" in job and job["link"]:
-                job_elements.append(Paragraph(job["link"], styles["link"]))
+                job_header.append(Paragraph(job["link"], styles["link"]))
+            job_header.append(Spacer(1, 3))
 
-            job_elements.append(Spacer(1, 3))
-
-            for b in job.get("bullets", []):
-                job_elements.append(
-                    Paragraph(f"&bull;&nbsp;&nbsp;{b}", styles["bullet"])
+            bullets = job.get("bullets", [])
+            if bullets:
+                # Pin the header + first bullet together so a job never
+                # starts with just a header dangling at a page bottom.
+                job_header.append(
+                    Paragraph(f"&bull;&nbsp;&nbsp;{bullets[0]}", styles["bullet"])
                 )
-                job_elements.append(Spacer(1, 2))
+                job_header.append(Spacer(1, 2))
 
-            job_elements.append(Spacer(1, 8))
+            story.append(KeepTogether(job_header))
 
-            story.append(KeepTogether(job_elements))
+            # Remaining bullets flow freely across pages.
+            for b in bullets[1:]:
+                story.append(Paragraph(f"&bull;&nbsp;&nbsp;{b}", styles["bullet"]))
+                story.append(Spacer(1, 2))
+
+            story.append(Spacer(1, 8))
+
+        # for job in RESUME["experience"]:
+        #     job_elements = []
+
+        #     left_col = [
+        #         Paragraph(f'<b>{job["company"]}</b>', styles["h3"]),
+        #         Paragraph(job["role"], styles["h3_sub"]),
+        #     ]
+        #     right_col = [
+        #         Paragraph(job.get("dates", ""), styles["h3_right"]),
+        #         Paragraph(job.get("location", ""), styles["h3_sub_right"]),
+        #     ]
+
+        #     header_table = Table(
+        #         [[left_col, right_col]],
+        #         colWidths=[CONTENT_W * 0.65, CONTENT_W * 0.35],
+        #         hAlign="CENTER",
+        #     )
+        #     header_table.setStyle(
+        #         TableStyle(
+        #             [
+        #                 ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        #                 ("LEFTPADDING", (0, 0), (-1, -1), 0),
+        #                 ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        #                 ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+        #                 ("TOPPADDING", (0, 0), (-1, -1), 0),
+        #             ]
+        #         )
+        #     )
+        #     job_elements.append(header_table)
+
+        #     if "link" in job and job["link"]:
+        #         job_elements.append(Paragraph(job["link"], styles["link"]))
+
+        #     job_elements.append(Spacer(1, 3))
+
+        #     for b in job.get("bullets", []):
+        #         job_elements.append(
+        #             Paragraph(f"&bull;&nbsp;&nbsp;{b}", styles["bullet"])
+        #         )
+        #         job_elements.append(Spacer(1, 2))
+
+        #     job_elements.append(Spacer(1, 8))
+
+        #     story.append(KeepTogether(job_elements))
 
     # Education
     if "education" in RESUME and RESUME["education"]:

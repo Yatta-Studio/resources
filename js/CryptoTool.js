@@ -1,6 +1,7 @@
 const CryptoTool = {
   // Internal helper to derive a secure cryptographic key from a text secret
   // tqxQB+rdTBW2lm69VRwm+iA62xTbP0jIdBFDbQMKJl54Fv0QrkhqtNlWEcsDLz5zcym62uPTwUEvAichGupJ4iNNcjxsbnRmrrl7pcci939hxObPzVydtEb+R4uVEvdskEc0x0Y=
+  // sduImkpWH4mvETN7f4N5cxLJ3EDft7HSNGU+hcDXT9H2DqGX78ws4XdWsuWweQglb56XWNnr8OCWdMsUdUMF6yxHNhhCAjhO+/yE/hysMwkd3tvQMFQCFIbchfk8Q6U51wM=
   async _getKey(secret, usage) {
     const enc = new TextEncoder();
     const keyMaterial = await window.crypto.subtle.importKey(

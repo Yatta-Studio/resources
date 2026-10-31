@@ -1,17 +1,17 @@
-    # "summary": (
-    #     "Technical Account Manager / Senior Software Engineer with a proven track "
-    #     "record of owning the post-sale technical relationship for enterprise SaaS "
-    #     "clients — from implementation and onboarding through critical escalation "
-    #     "management and ongoing integration health. Combines deep hands-on engineering "
-    #     "expertise (APIs, data-intensive systems, modern web applications) with direct "
-    #     "client-facing ownership across healthcare, education technology, cybersecurity, "
-    #     "and business intelligence, serving as the primary technical bridge between "
-    #     "customers and internal Engineering, Product, and Support teams. Recently "
-    #     "focused on applying AI-enabled and agentic workflows to streamline complex "
-    #     "enterprise integrations. Backed by a Master's degree in Electrical Engineering, "
-    #     "bringing a systems-thinking approach to diagnosing and resolving technically "
-    #     "complex customer challenges. Fluent in both French and English."
-    # ),
+# "summary": (
+#     "Technical Account Manager / Senior Software Engineer with a proven track "
+#     "record of owning the post-sale technical relationship for enterprise SaaS "
+#     "clients — from implementation and onboarding through critical escalation "
+#     "management and ongoing integration health. Combines deep hands-on engineering "
+#     "expertise (APIs, data-intensive systems, modern web applications) with direct "
+#     "client-facing ownership across healthcare, education technology, cybersecurity, "
+#     "and business intelligence, serving as the primary technical bridge between "
+#     "customers and internal Engineering, Product, and Support teams. Recently "
+#     "focused on applying AI-enabled and agentic workflows to streamline complex "
+#     "enterprise integrations. Backed by a Master's degree in Electrical Engineering, "
+#     "bringing a systems-thinking approach to diagnosing and resolving technically "
+#     "complex customer challenges. Fluent in both French and English."
+# ),
 RESUME = {
     "name": "Gerald Truong",
     "title": "Senior Software Engineer | AI-Enabled Applications | Full-Stack & Distributed Systems",
@@ -80,20 +80,20 @@ RESUME = {
         {
             "company": "Edlink",
             "dates": "June 2023 to November 2025",
-            "role": "Software Engineer / Technical Account Lead",
+            "role": "Software Engineer / Technical Account Solution Engineer",
             "location": "Austin, TX",
             "link": "https://ed.link",
             "bullets": [
-                "Architected and deployed an AI-assisted data mapping agent leveraging agentic workflows to help clients map SIS fields to Edlink standards.",
+                "Architected and deployed an AI-assisted data mapping agent in Python and FastAPI, using the OpenAI SDK and agentic workflows to map clients' custom SIS data to Edlink's standard schema.",
+                "Built a RAG-based support chatbot using the OpenAI SDK and pgvector for embedding storage and semantic retrieval, integrating LLM services into customer-facing operational workflows.",
+                "Built GitHub Actions CI/CD pipelines for automated deployment and end-to-end testing of AI services and integrations.",
                 "Engineered rostering, SSO, and coursework API integrations for Facts SIS, Blackbaud SIS, Toddle LMS, and Moodle LMS using Node.js, NestJS, and TypeScript.",
-                "Implemented audit monitoring system with email notifications.",
                 "Developed LTI 1.1 and LTI 1.3 solutions across major LMS platforms including Canvas, Schoology, Brightspace, and Blackboard.",
-                "Served as the embedded technical authority for the Client Success team, acting as the primary bridge between CSMs, clients, and Edlink Engineering/Product on all integration-related technical matters.",
-                "Built data pipeline monitoring UIs, custom JSON property editors for rostering records in Vue JS.",
-                "Triaged and resolved critical (P1) integration escalations by isolating root cause across Edlink, client applications, and third-party LMS/SIS providers, owning client communication through resolution as the formal engineering escalation point for the client success team.",
+                "Built an audit monitoring system with email notifications, plus data pipeline monitoring UIs and custom JSON property editors for rostering records in Vue.js.",
+                "Triaged and resolved critical (P1) integration escalations by isolating root cause across Edlink, client applications, and third-party LMS/SIS providers, diagnosing logs and owning client communication through resolution as the formal engineering escalation point for Client Success.",
                 "Monitored integration health and data quality across client rosters, investigating sync failures and missing users, classes, and enrollments to identify recurring provider-specific issues before they escalated.",
-                "Guided EdTech clients through implementation planning, defining required integrations (SSO, rostering, grades, coursework) and coordinating milestones between client Product/Engineering teams and Edlink Engineering, providing hands-on support through clients' first five school/district onboardings per Edlink's recommended launch process.",
-                "Led complex school and district onboarding calls, troubleshooting LMS/SIS/IdP-specific authentication, permissions, and data-sharing issues, and diagnosing integration logs to pinpoint failure points for individual district connections.",
+                "Served as the embedded technical authority for Client Success, bridging CSMs, clients, and Edlink Engineering/Product on all integration-related technical matters.",
+                "Guided EdTech clients through implementation planning and their first five school/district onboardings, defining required integrations (SSO, rostering, grades, coursework) and coordinating milestones across client and Edlink engineering teams.",
             ],
         },
         {
