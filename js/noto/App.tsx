@@ -5,7 +5,7 @@ import { EmptyState } from "./components/EmptyState";
 import { MarkdownEditor } from "./components/MarkdownEditor";
 import { MarkdownPreview } from "./components/MarkdownPreview";
 import { Directory, ViewMode } from "./types";
-import { listFolders, onDisplayMarkdown } from "./api";
+import { listFolders, onDisplayMarkdown } from "./api/api";
 
 const App = () => {
     const [markdown, setMarkdown] = useState<string>("");
