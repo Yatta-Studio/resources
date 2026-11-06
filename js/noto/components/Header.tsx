@@ -1,5 +1,5 @@
 import { Sun, Moon, FileText, Edit3, Eye, Columns } from "lucide-react";
-import { useTheme } from "../ThemeProvider";
+import { useTheme } from "../context/ThemeProvider";
 import { ViewMode } from "../types";
 
 interface HeaderProps {

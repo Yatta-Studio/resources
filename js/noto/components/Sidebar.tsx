@@ -1,5 +1,5 @@
 import { PanelLeftClose, PanelLeft } from "lucide-react";
-import { FileList } from "../file-list";
+import { FileList } from "../FileList";
 import { Directory } from "../types";
 
 interface SidebarProps {

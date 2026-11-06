@@ -1,3 +1,6 @@
+Write-Host "Navigating to js/ directory..." -ForegroundColor Cyan
+Set-Location js
+
 Write-Host "Building the project..." -ForegroundColor Cyan
 npm run build
 

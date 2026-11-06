@@ -3,7 +3,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // @ts-expect-error - esm.sh deep style import
 import oneDark from "https://esm.sh/react-syntax-highlighter@16.1.1/dist/esm/styles/prism/one-dark?external=react";
-import { useTheme } from "../ThemeProvider";
+import { useTheme } from "../context/ThemeProvider";
 import { CopyButton } from "./CopyButton";
 import "./markdown.css";
 

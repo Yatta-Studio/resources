@@ -1,7 +1,7 @@
 import { useId } from "react";
 import { FileIcon, FolderIcon, FolderOpenIcon } from "lucide-react";
 import { Directory } from "./types";
-import { FileList } from "./file-list";
+import { FileList } from "./FileList";
 
 interface FileNodeProps {
     directory: Directory;

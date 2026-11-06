@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en" class="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard Preview</title>
+
+        <!-- Theme bootstrap: scope class set BEFORE first paint -->
+        <script>
+            document.documentElement.className =
+                localStorage.getItem("theme") ||
+                (matchMedia("(prefers-color-scheme: dark)").matches
+                    ? "dark"
+                    : "light");
+        </script>
+
+        <!-- Compiled design system:
+         npx @tailwindcss/cli -i js/preview_ui/index.css -o js/preview_ui/dist.css --watch -->
+        <link rel="stylesheet" href="./dist.css" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- No-bundler module resolution (?deps pins lucide's react peer to ours) -->
+        <script type="importmap">
+            {
+                "imports": {
+                    "react": "https://esm.sh/react@18.3.1",
+                    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?deps=react@18.3.1",
+                    "lucide-react": "https://esm.sh/lucide-react@0.469.0?deps=react@18.3.1",
+                    "htm": "https://esm.sh/htm@3.1.1"
+                }
+            }
+        </script>
+
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel" data-type="module" data-presets="react">
+            import React, { useState } from "react";
+            import { createRoot } from "react-dom/client";
+            import Header from "./components/Header.js";
+            import {
+                BarChart3,
+                ChevronRight,
+                FolderKanban,
+                LayoutDashboard,
+                LogOut,
+                Plus,
+                Settings,
+                TrendingDown,
+                TrendingUp,
+                Users,
+            } from "lucide-react";
+
+            function UserCard({
+                avatarUrl,
+                fullName,
+                username,
+                status,
+                onClick,
+            }) {
+                const [imgError, setImgError] = useState(false);
+
+                const initials = fullName
+                    .split(" ")
+                    .map((part) => part.charAt(0))
+                    .slice(0, 2)
+                    .join("")
+                    .toUpperCase();
+
+                return (
+                    <div
+                        onClick={onClick}
+                        className={`user-card ${onClick ? "card-interactive" : ""}`}
+                    >
+                        <div className="relative shrink-0">
+                            <div className="avatar sm:h-14 sm:w-14">
+                                {avatarUrl && !imgError ? (
+                                    <img
+                                        src={avatarUrl}
+                                        alt={fullName}
+                                        onError={() => setImgError(true)}
+                                    />
+                                ) : (
+                                    <span className="avatar-fallback">
+                                        {initials}
+                                    </span>
+                                )}
+                            </div>
+                            {status && (
+                                <span
+                                    className="status-dot"
+                                    data-status={status}
+                                    title={status}
+                                />
+                            )}
+                        </div>
+
+                        <div className="min-w-0">
+                            <p className="text-ui-strong truncate">
+                                {fullName}
+                            </p>
+                            <p className="text-ui-meta truncate">@{username}</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            /* ========================== Demo data ========================== */
+
+            const currentUser = {
+                fullName: "Sarah Chen",
+                username: "sarahc",
+                status: "online",
+                avatarUrl: "https://randomuser.me/api/portraits/women/44.jpg",
+            };
+
+            const navItems = [
+                { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+                { id: "team", label: "Team", icon: Users },
+                { id: "projects", label: "Projects", icon: FolderKanban },
+                { id: "reports", label: "Reports", icon: BarChart3 },
+                { id: "settings", label: "Settings", icon: Settings },
+            ];
+
+            const stats = [
+                {
+                    label: "Active users",
+                    value: "1,284",
+                    delta: "+12.4% this week",
+                    dir: "up",
+                    good: true,
+                },
+                {
+                    label: "Projects shipped",
+                    value: "23",
+                    delta: "+3 this week",
+                    dir: "up",
+                    good: true,
+                },
+                {
+                    label: "Open reviews",
+                    value: "7",
+                    delta: "+2 vs last week",
+                    dir: "up",
+                    good: false,
+                },
+                {
+                    label: "Avg. response",
+                    value: "2.4h",
+                    delta: "-18m vs last week",
+                    dir: "down",
+                    good: true,
+                },
+            ];
+
+            const badgeClasses = {
+                active: "bg-[var(--color-success-container)] text-[var(--color-on-success-container)]",
+                review: "bg-[var(--color-warning-container)] text-[var(--color-on-warning-container)]",
+                archived:
+                    "bg-[var(--color-disabled-surface)] text-[var(--color-disabled-on-surface)]",
+            };
+
+            const projects = [
+                {
+                    id: 1,
+                    name: "Design system rollout",
+                    desc: "Migrating preview UI to token classes",
+                    status: "active",
+                },
+                {
+                    id: 2,
+                    name: "Mobile onboarding",
+                    desc: "Redraw of the first-run flow",
+                    status: "review",
+                },
+                {
+                    id: 3,
+                    name: "Legacy API sunset",
+                    desc: "v1 endpoints → deprecation notices",
+                    status: "review",
+                },
+                {
+                    id: 4,
+                    name: "Q3 analytics report",
+                    desc: "Archived after leadership review",
+                    status: "archived",
+                },
+            ];
+
+            const team = [
+                {
+                    id: 2,
+                    fullName: "Marcus Johnson",
+                    username: "mjohnson",
+                    status: "online",
+                    avatarUrl: "https://randomuser.me/api/portraits/men/32.jpg",
+                },
+                {
+                    id: 4,
+                    fullName: "Diego Ramírez",
+                    username: "dramirez",
+                    status: "offline",
+                    avatarUrl: "https://randomuser.me/api/portraits/men/75.jpg",
+                },
+                {
+                    id: 7,
+                    fullName: "A Really Long Display Name For Truncation",
+                    username: "an_extremely_long_username_that_truncates",
+                    status: "away",
+                    avatarUrl:
+                        "https://randomuser.me/api/portraits/women/12.jpg",
+                },
+                {
+                    id: 5,
+                    fullName: "Amara Okafor",
+                    username: "aokafor",
+                    status: "online",
+                },
+                {
+                    id: 8,
+                    fullName: "Elena Petrova",
+                    username: "epetrova",
+                    status: "online",
+                    avatarUrl: "https://broken-url.example/404.jpg",
+                },
+            ];
+
+            /* ========================== App ========================== */
+
+            function App() {
+                const [activeNav, setActiveNav] = useState("dashboard");
+                const [lastClicked, setLastClicked] = useState(null);
+                const [theme, setTheme] = useState(
+                    document.documentElement.classList.contains("dark")
+                        ? "dark"
+                        : "light",
+                );
+
+                const toggleTheme = () => {
+                    const next = theme === "dark" ? "light" : "dark";
+                    document.documentElement.classList.remove("dark", "light");
+                    document.documentElement.classList.add(next);
+                    localStorage.setItem("theme", next);
+                    setTheme(next);
+                };
+
+                return (
+                    <div className="layout-sidebar-split h-screen w-full overflow-hidden">
+                        <aside className="col border-r border-[var(--color-outline)]">
+                            <div className="border-b border-[var(--color-outline)] p-3">
+                                <UserCard
+                                    avatarUrl={currentUser.avatarUrl}
+                                    fullName={currentUser.fullName}
+                                    username={currentUser.username}
+                                    status={currentUser.status}
+                                    onClick={() =>
+                                        setLastClicked("@sarahc · profile")
+                                    }
+                                />
+                            </div>
+
+
+                            <nav className="col flex-1 gap-1 overflow-y-auto p-3">
+                                {navItems.map((item) => (
+                                    <button
+                                        key={item.id}
+                                        type="button"
+                                        onClick={() => setActiveNav(item.id)}
+                                        className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                                            activeNav === item.id
+                                                ? "bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)]"
+                                                : "text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-on-surface)]"
+                                        }`}
+                                    >
+                                        <item.icon
+                                            size={16}
+                                            className="shrink-0"
+                                        />
+                                        {item.label}
+                                    </button>
+                                ))}
+                            </nav>
+
+                            <div className="layout-row-left-fill gap-3 border-t border-[var(--color-outline)] p-3">
+                                <span className="text-caption text-[var(--color-on-surface-muted)]">
+                                    preview · v0.1.0
+                                </span>
+                                <button
+                                    type="button"
+                                    title="Sign out"
+                                    aria-label="Sign out"
+                                    className="btn-round-icon h-8 w-8 text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-hover)]"
+                                >
+                                    <LogOut size={14} />
+                                </button>
+                            </div>
+                        </aside>
+
+                        <main className="surface-main">
+                            <Header
+                                title="Dashboard"
+                                subtitle="Team & project overview"
+                                theme={theme}
+                                onToggleTheme={toggleTheme}
+                            />
+
+                            {/* LAST child → this is the scroll container */}
+                            <div className="col gap-6 p-6">
+                                <section
+                                    className="layout-auto-grid"
+                                    aria-label="Key metrics"
+                                >
+                                    {stats.map((s) => (
+                                        <div
+                                            key={s.label}
+                                            className="surface-primary col gap-1"
+                                        >
+                                            <span className="text-ui-label text-[var(--color-on-surface-muted)]">
+                                                {s.label}
+                                            </span>
+                                            <span className="text-heading-lg">
+                                                {s.value}
+                                            </span>
+                                            <span
+                                                className={`inline-flex items-center gap-1 text-caption ${
+                                                    s.good
+                                                        ? "text-[var(--color-success)]"
+                                                        : "text-[var(--color-error)]"
+                                                }`}
+                                            >
+                                                {s.dir === "up" ? (
+                                                    <TrendingUp size={12} />
+                                                ) : (
+                                                    <TrendingDown size={12} />
+                                                )}
+                                                {s.delta}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </section>
+
+                                {/* items-start: panels keep natural height instead of stretching */}
+                                <section className="layout-auto-grid items-start">
+                                    <div className="surface-primary col gap-3">
+                                        <div className="layout-row-left-fill">
+                                            <h2 className="text-heading-sm">
+                                                Team
+                                            </h2>
+                                            <a
+                                                href="#team"
+                                                className="anchor_link"
+                                            >
+                                                View all
+                                            </a>
+                                        </div>
+                                        {team.map((u) => (
+                                            <UserCard
+                                                key={u.id}
+                                                avatarUrl={u.avatarUrl}
+                                                fullName={u.fullName}
+                                                username={u.username}
+                                                status={u.status}
+                                                onClick={() =>
+                                                    setLastClicked(
+                                                        `@${u.username}`,
+                                                    )
+                                                }
+                                            />
+                                        ))}
+                                    </div>
+
+                                    <div className="surface-primary col gap-3">
+                                        <div className="layout-row-left-fill">
+                                            <h2 className="text-heading-sm">
+                                                Recent projects
+                                            </h2>
+                                            <a
+                                                href="#projects"
+                                                className="anchor_link"
+                                            >
+                                                View all
+                                            </a>
+                                        </div>
+                                        {projects.map((p) => (
+                                            <div
+                                                key={p.id}
+                                                className="layout-row-left-fill gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-[var(--color-surface-hover)]"
+                                            >
+                                                <div className="min-w-0">
+                                                    <p className="text-ui-strong truncate">
+                                                        {p.name}
+                                                    </p>
+                                                    <p className="text-ui-meta truncate">
+                                                        {p.desc}
+                                                    </p>
+                                                </div>
+                                                <span
+                                                    className={`shrink-0 rounded-full px-2 py-1 text-caption capitalize ${badgeClasses[p.status]}`}
+                                                >
+                                                    {p.status}
+                                                </span>
+                                                <ChevronRight
+                                                    size={16}
+                                                    className="shrink-0 text-[var(--color-on-surface-muted)]"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            </div>
+                        </main>
+                    </div>
+                );
+            }
+
+            createRoot(document.getElementById("root")).render(<App />);
+        </script>
+    </body>
+</html>
